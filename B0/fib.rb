@@ -8,7 +8,6 @@ while((s.to_i.to_s != s)||(s.to_i<1)||(s.to_i>100))
 	s=gets.chomp
 end
 s=s.to_i
-#exit if s==0
 puts "1-#{s}的斐波那契数列如下"
 while f3 <= s
 puts f3
