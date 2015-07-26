@@ -2,7 +2,7 @@ require './Msg.rb'
 
 class MsgManage #留言管理类
 	
-	def MsgManage.add(msgArray,messageContent='Nothing',authorName='Nobody') #临时版本，和表单交互时再改
+	def MsgManage.add(msgArray,messageContent='Nothing',authorName='') #临时版本，和表单交互时再改
 		temp=Msg.new
 		temp.id=$idnum
 		$idnum+=1
