@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>留言板</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <form action="/edit/<%= @idEdit %>"  method="post">
+        content <textarea name="editContent" rows="10" cols="30" ><%= @originMsg %></textarea>
+        author <input type="text" name="editAuthor"  size="20"  value="<%= @originAuthor %>"><br>
+    <input type="submit" name="submit"  value="提交">
+    </form>
+</body>
+</html>

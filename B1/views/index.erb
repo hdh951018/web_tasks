@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>留言板</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" type="text/css" href="index.css" />
-
+    <title>留言板</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
 </head>
 <body>  
-<a href="add">add</a>
+    <a href="add">add</a>
 
-<form>
-查找<select name="mode">
-<option value="id">作者ID</option>
-<option value="author">作者姓名</option>
-</select>
-<input type="text" name="query" size="20">
-<input type="submit" value="查找">
-</form>
+    <form>
+        查找<select name="mode">
+            <option value="id">作者ID</option>
+            <option value="author">作者姓名</option>
+        </select>
+        <input type="text" name="query" size="20">
+        <input type="submit" value="查找">
+    </form>
 
 
-<table border="1" class="table">
-<tr align="center" id="head">
-<td width="50">留言ID</td>
-<td>留言内容</td>
-<td width="100">留言作者</td>
-<td width="120">创建时间</td>
-<td width="50">操作</td>
-</tr>
+    <table border="1" class="table">
+        <tr align="center" id="head">
+            <td width="50">留言ID</td>
+            <td width="950">留言内容</td>
+            <td width="100">留言作者</td>
+            <td width="120">创建时间</td>
+            <td width="50">操作</td>
+        </tr>
 
-<% for i in 0...@allMsg.size do %>  
-<tr align="center">
-<td><%= @allMsg[i].id %></td>
-<td align="left" height="20" ><%= @allMsg[i].message %></td>
-<td><%= @allMsg[i].author %></td>
-<td><%= @allMsg[i].created_at %></td>
-<td><a href="/delete/<%= @allMsg[i].id %>" ><button >删除</button></a><a><button >编辑</button></a></td>
-</tr>
-<% end %>  
-</table>
-
+        <% i=@allMsg.size-1 ;while i >= 0 %>  
+        <tr align="center">
+            <td><%= @allMsg[i].id %></td>
+            <td align="left" height="20" ><%= @allMsg[i].message %></td>
+            <td><%= @allMsg[i].author %></td>
+            <td><%= @allMsg[i].created_at %></td>
+            <td><a href="/delete/<%= @allMsg[i].id %>" ><button >删除</button></a>
+                    <a href="/edit/<%= @allMsg[i].id %>"><button >编辑</button></a>
+            </td>
+        </tr>
+        <% i -= 1 %>
+        <% end %>  
+    </table>
 <body>
-
 </html>
