@@ -14,23 +14,23 @@ for i in 1..50 do
   	我没说不代表我不会痛","第#{i}位Jason")
 end
 
+$testMsg = $allMsg
+
 get '/' do
-  @allMsg = $allMsg
-#  erb :queryResult
+  @queryMsg = $allMsg
+  if params[:mode]=="id"
+    $testMsg = MsgManage.searchByID($allMsg, params[:query].lstrip.rstrip)    
+  elsif params[:mode]=="author"
+    $testMsg = MsgManage.searchByAuthor($allMsg, params[:query])
+  else
+    return erb :index
+  end
+  @queryMsg = $testMsg  
   erb :index
+#  erb :index
 end
 
-post '/' do   #暂时没有实现
-  #筛选表单
-  @idQuery, @authorQuery = $allMsg
-  if params[:mode]=="id"
-    @idQuery = MsgManage.searchByID($allMsg, params[:query].to_i)
-  elsif params[:mode]=="author"
-    @authorQuery = MsgManage.searchByAuthor($allMsg, params[:query])
-  else
-    return "错误请求"    
-  end
-end
+
 
 get '/add' do 
   erb :add
@@ -54,17 +54,18 @@ end
 get '/edit/:editID' do 
   @allMsg = $allMsg
   @editID = params[:editID]
-  return erb :editFailed  if MsgManage.searchByID($allMsg,params[:editID].to_i)=='NothingFound'
+  return erb :editFailed  if MsgManage.searchByID($allMsg,params[:editID])==[]
   #如果没有找到该ID，直接渲染编辑失败的模板
-  MsgNeedEdit = MsgManage.searchByID($allMsg, params[:editID].to_i)
-  @originMsg = MsgNeedEdit.message
-  @originAuthor = MsgNeedEdit.author
+  MsgNeedEdit = MsgManage.searchByID($allMsg, params[:editID])
+  @originMsg = MsgNeedEdit[0].message
+  @originAuthor = MsgNeedEdit[0].author
   erb :edit
 end
 
 post '/edit/:editID' do
+  return redirect to ('/') if params[:editCncl] == '取消'
   @newContent,@newAuthor = params[:editContent].lstrip.rstrip,params[:editAuthor].lstrip.rstrip
   return erb :addFailed if (params[:editContent].lstrip.rstrip).length<10 || params[:editAuthor].lstrip.rstrip ==''
-  MsgManage.edit($allMsg, params[:editID].to_i, params[:editContent], params[:editAuthor]) if params[:editSub] == "确定"
+  MsgManage.edit($allMsg, params[:editID], params[:editContent], params[:editAuthor]) if params[:editSub] == "确定"
   redirect to ('/')
 end

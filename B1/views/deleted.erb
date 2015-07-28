@@ -3,6 +3,7 @@
 <head>
   <title>留言板</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="../feedback.css" />
 </head>
 <body>
   <% if @delResult.is_a?(Integer) then %>
@@ -11,9 +12,9 @@
   <%= "未能成功删除该留言"%>
   <% end %>
   <br>
-  5秒钟后自动返回首页...<br>
+  3秒钟后自动返回首页...<br>
   点击
   <a href="/"><button class="btn">返回首页</button></a>
-  <script language='javascript'>setTimeout("javascript:location.href='/'", 5000); </script>
+  <script language='javascript'>setTimeout("javascript:location.href='/'", 3000); </script>
 </body>
 </html>

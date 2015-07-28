@@ -9,8 +9,8 @@ table{
     float: left;     
     }
 .indexBody {
-background:url(../mbuntu5.jpeg) no-repeat;
-background-attachment:fixed;
+    background:url(../mbuntu5.jpeg) no-repeat;
+    background-attachment:fixed;
 }
 
 .ztableHead{
@@ -59,7 +59,9 @@ background-attachment:fixed;
     zoom: 1;
     cursor: pointer;
 }
-
+#edit{
+    background-color: #ffffff;
+}
 .MsgTextarea{
     border-color: #ccffff;
     height: 300px;
@@ -101,6 +103,7 @@ background-attachment:fixed;
     -moz-border-radius: 5px;      /* Gecko browsers */
     -webkit-border-radius: 5px;   /* Webkit browsers */
 }
+
 .MsgBtn{
     top: 30px;
     float:left;

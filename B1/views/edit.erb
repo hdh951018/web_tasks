@@ -3,16 +3,16 @@
 <head>
   <title>留言板</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link rel="stylesheet" type="text/css" href="./index.css" />
+  <link rel="stylesheet" type="text/css" href="../index.css" />
 </head>
-<body>
-  <div >
+<body background="../mbuntu4.jpg">
+  <div class="addDiv">
     <form action="/edit/<%= @editID %>"  method="post" >
       <textarea name="editContent" placeholder="内容不少于10字" autofocus="autofocus" 
-      wrap="hard" class="MsgTextarea" ><%= @originMsg %></textarea><br>
-      <input type="text" name="editAuthor" placeholder="作者不能为空" value="<%= @originAuthor %>" class="MsgText" >
-    <input type="submit" name="editSub"  value="确定">
-    <input type="submit" name="editCncl" value="取消">
+      wrap="hard" class="MsgTextarea" id="edit"><%= @originMsg %></textarea><br>
+      <input type="text" name="editAuthor" placeholder="作者不能为空" value="<%= @originAuthor %>" class="MsgText" id="edit" >
+    <input type="submit" name="editSub"  value="确定" class="MsgBtn">
+    <input type="submit" name="editCncl" value="取消" class="MsgBtn">
     </form>
   </div>
 </body>

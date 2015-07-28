@@ -36,20 +36,22 @@ class MsgManage #留言管理类
     j   #返回统计个数
   end
 
-  def MsgManage.searchByID(msgArray,idInput=0)
-    if idInput == 0 
-      p msgArray          #如果没有传参数，输出所有   
+  def MsgManage.searchByID(msgArray,idInput)
+    idFound = Array.new
+    return idFound if (idInput.to_i.to_s != idInput)
+    if idInput.to_i == 0 
+      return msgArray          #如果没有传参数，输出所有   
     else    
       for i in 0...msgArray.size
-        return msgArray[i]  if msgArray[i].id == idInput
+        return idFound.push(msgArray[i])  if msgArray[i].id == idInput.to_i
       end
     end
-    'NothingFound'
+    idFound
   end
 
-  def MsgManage.searchByAuthor(msgArray,authorInput='')   ###需要调整
+  def MsgManage.searchByAuthor(msgArray,authorInput='0')   ###需要调整
     idFound=Array.new
-    if authorInput==''           #如果没有传参数，输出所有   
+    if authorInput=='0'           #如果没有传参数，输出所有   
       idFound = msgArray  
     else    
       for i in 0...msgArray.size
@@ -61,7 +63,7 @@ class MsgManage #留言管理类
 
   def MsgManage.edit(msgArray, id, editedMessage,editedAuthor)
     editArray = MsgManage.searchByID(msgArray, id)
-    editArray.message = editedMessage
-    editArray.author = editedAuthor
+    editArray[0].message = editedMessage
+    editArray[0].author = editedAuthor
   end
 end
