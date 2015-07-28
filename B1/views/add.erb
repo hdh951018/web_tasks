@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>留言板</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>留言板</title>
+  <link rel="stylesheet" type="text/css" href="./index.css" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
-<body>
-    <form action="/add"  method="post">
-        content <textarea name="newContent" rows="10" cols="30"></textarea>
-        author <input type="text" name="newAuthor"  size="20"><br>
-    <input type="submit" name="submit"  value="提交">
+
+<body  background="./mbuntu.jpg" >
+  <div class="addDiv">
+    <form action="/add"  method="post" >
+      <textarea name="newContent" placeholder="内容不少于10字" autofocus="autofocus" 
+      wrap="hard" class="MsgTextarea"></textarea><br>
+      <input type="text" name="newAuthor" placeholder="作者不能为空" class="MsgText">
+    <input type="submit" name="addSub"   value="提交" class="MsgBtn">
+    <input type="submit" name="addCncl"  value="取消" class="MsgBtn">
     </form>
+  </div>
 </body>
+
 </html>

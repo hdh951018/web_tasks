@@ -5,12 +5,10 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
-  <% if @delResult.is_a?(Integer) then %>
-  <%= "成功删除" %><%= @delResult %><%= "条留言" %>
-  <% else %>
-  <%= "未能成功删除该留言"%>
-  <% end %>
-  <br>
+  <%= "留言字数不足十个字<br>" if @newContent.length<10 %>
+  <%= "作者不能为空<br>" if @newAuthor =='' %>
+  <%%>
+  操作失败<br>
   5秒钟后自动返回首页...<br>
   点击
   <a href="/"><button class="btn">返回首页</button></a>

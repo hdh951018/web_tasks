@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>留言板</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>留言板</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="./index.css" />
 </head>
 <body>
-    <form action="/edit/<%= @idEdit %>"  method="post">
-        content <textarea name="editContent" rows="10" cols="30" ><%= @originMsg %></textarea>
-        author <input type="text" name="editAuthor"  size="20"  value="<%= @originAuthor %>"><br>
-    <input type="submit" name="submit"  value="提交">
+  <div >
+    <form action="/edit/<%= @editID %>"  method="post" >
+      <textarea name="editContent" placeholder="内容不少于10字" autofocus="autofocus" 
+      wrap="hard" class="MsgTextarea" ><%= @originMsg %></textarea><br>
+      <input type="text" name="editAuthor" placeholder="作者不能为空" value="<%= @originAuthor %>" class="MsgText" >
+    <input type="submit" name="editSub"  value="确定">
+    <input type="submit" name="editCncl" value="取消">
     </form>
+  </div>
 </body>
 </html>
