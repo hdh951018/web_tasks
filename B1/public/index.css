@@ -9,15 +9,8 @@ table{
     float: left;     
     }
 .indexBody {
-    background:url(../mbuntu5.jpeg) no-repeat;
+    background:url(../bkg5.jpeg) no-repeat;
     background-attachment:fixed;
-}
-
-.ztableHead{
-    background-color: #99ccff;
-}
-.zindexTable{
-    background-color: #ccffcc;
 }
 
 
@@ -161,3 +154,7 @@ table{
     z-index: 1; 
 }
 
+.feedback{
+  text-align: center;
+  color: #ffffff;
+}

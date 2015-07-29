@@ -3,15 +3,17 @@
 <head>
   <title>留言板</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link rel="stylesheet" type="text/css" href="../feedback.css" />
+  <link rel="stylesheet" type="text/css" href="../index.css" />
 </head>
-<body>
-  <%= "留言字数不足十个字<br>" if @newContent.length<10 %>
-  <%= "作者不能为空<br>" if @newAuthor =='' %>
-  操作失败<br>
-  5秒钟后自动返回首页...<br>
-  点击
-  <a href="/"><button class="btn">返回首页</button></a>
+<body background="../bkg7.JPG">
+  <div class="feedback">
+    <%= "留言字数不足十个字<br>" if @newContent.length<10 %>
+    <%= "作者不能为空<br>" if @newAuthor =='' %>
+    操作失败<br>
+    5秒钟后自动返回首页...<br>
+    点击
+    <a href="/"><button class="btn">返回首页</button></a>
+  </div>
   <script language='javascript'>setTimeout("javascript:location.href='/'", 5000); </script>
 </body>
 </html>
