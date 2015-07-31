@@ -55,7 +55,8 @@ class MsgManage #留言管理类
       idFound = msgArray  
     else    
       for i in 0...msgArray.size
-        idFound.push(msgArray[i])   if msgArray[i].author==authorInput    #压进匹配的id数组
+#       idFound.push(msgArray[i])   if msgArray[i].author==authorInput    #压进匹配的id数组
+        idFound.push(msgArray[i])   if msgArray[i].author.include?authorInput  #模糊查询
       end
     end
     idFound
