@@ -9,8 +9,9 @@
   <div class="addDiv">
     <form action="/edit/<%= @editID %>"  method="post" >
       <textarea name="editContent" placeholder="内容不少于10字" autofocus="autofocus" 
-      wrap="hard" class="MsgTextarea" id="edit"><%= @originMsg %></textarea><br>
-      <input type="text" name="editAuthor" placeholder="作者不能为空" value="<%= @originAuthor %>" class="MsgText" id="edit" >
+      wrap="hard" class="MsgTextarea" id="edit"><%= @origin_msg %></textarea><br>
+      <input type="text" name="editAuthor" placeholder="作者不能为空" value="<%= @origin_author %>" class="MsgText" 
+      id="edit" >
     <input type="submit" name="editSub"  value="确定" class="MsgBtn">
     <input type="submit" name="editCncl" value="取消" class="MsgBtn">
     </form>

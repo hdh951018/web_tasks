@@ -7,8 +7,8 @@
 </head>
 <body background="../bkg7.JPG">
   <div class="feedback">
-    <% if @delResult.is_a?(Integer) then %>
-    <%= "成功删除" %><%= @delResult %><%= "条留言" %>
+    <% if @del_rst!=0  %>
+    <%= "成功删除" %><%= @del_rst %><%= "条留言" %>
     <% else %>
     <%= "未能成功删除该留言"%>
     <% end %>
