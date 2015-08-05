@@ -13,7 +13,7 @@ for i in 0..49 do
   manager.add(Lyrics[i%10],"Jason#{i%8}")
 end
 #测试部分 预置内容
-
+@message={}
 
 get '/' do
   @query_msg = manager.msg_array
@@ -37,19 +37,15 @@ get '/add' do
   erb :add
 end
 
+
 post '/add' do
-  #以下实例变量，为判断错误条件所用
-  @new_content,@new_author = params[:new_content].strip,params[:new_author].strip
-  #点击取消则直接返回首页
   return redirect to ('/') if params[:addCncl] == '取消'
-  #判断字数是否符合要求
-  if (params[:new_content].strip).length<10 || params[:new_author].strip ==''
-    return erb :opFailed 
-  end
-  #字数符合要求，点击提交之后，进行添加操作
-  if params[:addSub] == "提交"
+  begin
     manager.add(params[:new_content], params[:new_author]) 
     redirect to ('/')
+  rescue Exception => e
+    @message = {status: 'danger', desc: e.message }
+    erb :add
   end
 end
 
@@ -59,7 +55,6 @@ get '/delete/:idDelete'  do
 end
 
 get '/edit/:editID' do 
-  @allMsg = manager.msg_array
   @editID = params[:editID]
   #如果没有找到该ID，直接渲染编辑失败的模板
   return erb :editNotFound  if manager.search_by_id(params[:editID])==nil 
@@ -69,13 +64,19 @@ get '/edit/:editID' do
   erb :edit
 end
 
+
 post '/edit/:editID' do
   return redirect to ('/') if params[:editCncl] == '取消'
-  #以下实例变量，为判断错误条件所用
-  @new_content,@new_author = params[:editContent].strip,params[:editAuthor].strip
-  return erb :opFailed if (params[:editContent].strip).length<10 || params[:editAuthor].strip ==''
-  manager.edit(params[:editID], params[:editContent], params[:editAuthor]) if params[:editSub] == "确定"
-  redirect to ('/')
+  begin
+    manager.edit(params[:editID], params[:editContent], params[:editAuthor]) 
+    redirect to ('/')
+  rescue Exception => e
+    @editID = params[:editID]
+    @message = {status: 'danger', desc: e.message }
+    @origin_msg = params[:editContent]
+    @origin_author = params[:editAuthor]
+    erb :edit
+  end
 end
 
 not_found do

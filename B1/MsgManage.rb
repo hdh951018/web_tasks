@@ -25,7 +25,15 @@ class MsgManage #留言管理类
     j = 0 #统计删除个数
     for idTemp in id_array     #在数组中循环
       i = 0
-      for x in 0...@msg_array.size              
+      # for x in 0...@msg_array.size              
+      #   if @msg_array[i].id==idTemp  #匹配id
+      #     @msg_array.slice!(i)
+      #     j+=1
+      #     i-=1
+      #   end
+      #   i+=1
+      # end
+      @msg_array.size.times do          #取代 for循环产生无用变量 节约内存
         if @msg_array[i].id==idTemp  #匹配id
           @msg_array.slice!(i)
           j+=1

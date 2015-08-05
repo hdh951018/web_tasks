@@ -6,6 +6,12 @@
   <link rel="stylesheet" type="text/css" href="../index.css" />
 </head>
 <body background="../bkg4.jpg">
+  <% if @message %>
+    <script type="text/javascript"> 
+        //弹出一个对话框  
+        alert("<%= @message[:desc] %>"); 
+    </script>
+  <% end %>
   <div class="addDiv">
     <form action="/edit/<%= @editID %>"  method="post" >
       <textarea name="editContent" placeholder="内容不少于10字" autofocus="autofocus" 
