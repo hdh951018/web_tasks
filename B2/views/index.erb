@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>留言板</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="./index.css" />
+</head>
+<body class="indexBody">  
+  <div class="tableDiv">
+    <div style="float:left;">
+      <form method="get">
+        <select name="mode" class="btn" style="padding: 0.2em 1em;">
+          <option value="id">留言ID</option>
+          <option value="author">留言作者</option>
+        </select>
+        <input type="text" name="query" size="20" class="Msgtext" placeholder="输入为空即查询全部" >
+        <input type="submit" value="查询" class="btn" style="padding: 0.3em 1em;">
+      </form>
+    </div>
+    <div style="float:right;">
+      <a href="add"><button class="btn" >添加留言</button></a>
+    </div>
+
+    <table >
+      <tr align="center" id="head" class="tableHead">
+        <td width="50">留言ID</td>
+        <td width="940">留言内容</td>
+        <td width="100">留言作者</td>
+        <td width="130">创建时间</td>
+        <td width="50">操作</td>
+      </tr>
+
+      <% i=@query_msg.size-1 ;while i >= 0 %>  
+      <tr align="center" class="indexTable">
+        <td><%= @query_msg[i].id %></td>
+        <td align="left" height="20" ><%= @query_msg[i].msg  %></td>
+        <td><%= @query_msg[i].author %></td>
+        <td><%= @query_msg[i].create_time.strftime("%Y年%m月%d日\n%H点%M分")  %></td>
+        <td><a href="/delete/<%= @query_msg[i].id %>" ><button class="btn">删除</button></a>
+            <a href="/edit/<%= @query_msg[i].id %>"   ><button class="btn">编辑</button></a>
+        </td>
+      </tr>
+      <% i -= 1 %>
+      <% end %>  
+    </table>
+  </div>
+<body>
+</html>

@@ -1,0 +1,160 @@
+
+table,th, td{
+  border: 1px solid #ffffff;       
+  }
+table{
+    border-collapse: collapse;
+    background-color: #ccffcc;
+    background: 50%;
+    float: left;     
+    }
+.indexBody {
+    background:url(../bkg5.jpeg) no-repeat;
+    background-attachment:fixed;
+}
+
+
+.btn {
+    position: relative;
+    overflow: visible;    
+    padding: 0.4em 1em;
+    border: 1px solid #d4d4d4;
+    margin: 1px;
+    text-align: center;
+    
+    color: #333;
+    white-space: nowrap;
+    outline: none;
+    background-color: #ececec;
+    background-image: linear-gradient(#f4f4f4, #ececec);
+    background-clip: padding-box;
+    border-radius: 0.2em;
+    zoom: 1;
+    background: transparent;
+    cursor: pointer;
+}
+
+.btn:hover{   
+    position: relative;
+    overflow: visible;    
+    padding: 0.4em 1em;
+    border: 1px solid #d4d4d4;
+    margin: 1px;
+    text-align: center;
+    text-shadow: 1px 1px 0 #fff;
+    color: #333;
+    white-space: nowrap;
+    outline: none;
+    background-color: #ececec;
+    background-image: linear-gradient(#f4f4f4, #ececec);
+    background-clip: padding-box;
+    border-radius: 0.2em;
+    zoom: 1;
+    cursor: pointer;
+}
+#edit{
+    background-color: #ffffff;
+}
+.MsgTextarea{
+    border-color: #ccffff;
+    height: 300px;
+    width: 600px;
+    background-color: #ccffff;
+    resize:none;
+    top: 30px;
+    padding: 10px;
+    position: relative;
+    float:left;
+    right:50%;
+    filter:alpha(opacity=80);   /*透明*/
+    -moz-opacity:0.8;
+    -khtml-opacity: 0.8;
+    opacity: 0.8;     
+
+    border-radius:5px;          /*圆角*/
+    -moz-border-radius: 5px;      /* Gecko browsers */
+    -webkit-border-radius: 5px;   /* Webkit browsers */
+
+}  
+.MsgText{
+    border-color: #ccffff;
+    padding: 2px;
+    height: 25px;
+    width: 150px;
+    background-color: #ccffff;
+    position: relative;
+    top: 35px;
+    float:left;
+    right:50%;
+    clear: both;
+    filter:alpha(opacity=80);       /*透明*/
+    -moz-opacity:0.8;
+    -khtml-opacity: 0.8;
+    opacity: 0.8;   
+
+    border-radius:5px;          /*圆角*/
+    -moz-border-radius: 5px;      /* Gecko browsers */
+    -webkit-border-radius: 5px;   /* Webkit browsers */
+}
+
+.MsgBtn{
+    top: 30px;
+    float:left;
+    right:50%;
+    margin: 6px;
+    opacity: 0.8;
+    position: relative;
+    overflow: visible;    
+    padding: 0.4em 1em;
+    border: 1px solid #d4d4d4;
+    text-align: center;
+    color: #333;
+    white-space: nowrap;
+    outline: none;
+    background-color: #ececec;
+    background-image: linear-gradient(#f4f4f4, #ececec);
+    background-clip: padding-box;
+    border-radius: 0.2em;
+    zoom: 1;
+    background: transparent;
+}
+.MsgBtn:hover{
+    top: 30px;
+    float:left;
+    right:50%;
+    margin: 6px;
+    opacity: 0.8;
+    position: relative;
+    overflow: visible;    
+    padding: 0.4em 1em;
+    border: 1px solid #d4d4d4;
+    text-align: center;
+    text-shadow: 1px 1px 0 #fff;
+    color: #333;
+    white-space: nowrap;
+    outline: none;
+    background-color: #ececec;
+    background-image: linear-gradient(#f4f4f4, #ececec);
+    background-clip: padding-box;
+    border-radius: 0.2em;
+    zoom: 1;
+}
+.addDiv{
+    height: 800px;
+    float:left;
+    position:relative;
+    left:50%;
+}
+
+.tableDiv{
+    padding: 10px;
+    margin: 10px;
+    height: 500px;
+    position: relative;
+    z-index: 1; 
+}
+
+.feedback{
+  text-align: center;
+  color: #ffffff;
+}

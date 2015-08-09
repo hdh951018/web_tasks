@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>留言板</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="../index.css" />
+</head>
+<body background="../bkg7.JPG">
+  <div class="feedback">
+    <% if @del_rst!=0  %>
+    <%= "成功删除" %><%= @del_rst %><%= "条留言" %>
+    <% else %>
+    <%= "未能成功删除该留言"%>
+    <% end %>
+    <br>
+    3秒钟后自动返回首页...<br>
+    点击
+    <a href="/"><button class="btn">返回首页</button></a>
+  </div>
+  <script language='javascript'>setTimeout("javascript:location.href='/'", 3000); </script>
+</body>
+</html>

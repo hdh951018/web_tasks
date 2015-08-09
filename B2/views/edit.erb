@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>留言板</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="../index.css" />
+</head>
+<body background="../bkg4.jpg">
+  <% if @message %>
+    <script type="text/javascript"> 
+        //弹出一个对话框  
+        alert("<%= @message[:desc] %>"); 
+    </script>
+  <% end %>
+  <div class="addDiv">
+    <form action="/edit/<%= @editID %>"  method="post" >
+      <textarea name="editContent" placeholder="内容不少于10字" autofocus="autofocus" 
+      wrap="hard" class="MsgTextarea" id="edit"><%= @origin_msg %></textarea><br>
+      <input type="text" name="editAuthor" placeholder="作者不能为空" value="<%= @origin_author %>" class="MsgText" 
+      id="edit" >
+    <input type="submit" name="editSub"  value="确定" class="MsgBtn">
+    <input type="submit" name="editCncl" value="取消" class="MsgBtn">
+    </form>
+  </div>
+</body>
+</html>
