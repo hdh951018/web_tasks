@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>留言板——修改密码</title>
+  <link rel="stylesheet" type="text/css" href="../index.css" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body  background="../bkg6.jpg" > <!-- 需修改 -->
+
+  <div class="signDiv">
+    <form action="/user/<%= session[:username] %>/alterpassword"  method="post" >
+      <input type="password" name="old_password" placeholder="旧密码" class="MsgText" >
+      <input type="password" name="new_password" placeholder="新密码" class="MsgText" >
+      <input type="password" name="new_password2" placeholder="确认密码" class="MsgText" >
+      <input type="submit" name="altSub"   value="确认更改" class="MsgBtn">
+      <input type="submit" name="altCncl"  value="取消" class="MsgBtn">
+    </form>
+  </div>
+  <% if @message %>
+    <div class="alert alert-<%= @message[:status] %>" role="alert">
+      <%= @message[:desc] %>
+    </div>
+  <% end %>        
+</body>
+
+</html>

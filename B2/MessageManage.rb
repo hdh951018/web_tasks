@@ -14,12 +14,13 @@ end
 
 class MsgManager 
 
-  def add(msg,author)
+  def add(msg,author,user_id)
     raise '留言不可以少于十个字' if msg.strip.length <10
     raise '作者不能少于两个字' if author.strip.length <2
     temp = Message.new
     temp.msg = msg.strip  
     temp.author = author.strip
+    temp.user_id = user_id
     temp.save
   end
 
@@ -46,4 +47,13 @@ class MsgManager
   def query_by_author(author)
     qau = Message.where("author = ?",author)
   end
+
+  def query_by_user(username)
+    temp = User.find_by(username: username)
+    if temp ==nil
+      qus = []
+    else
+      qus = Message.where("user_id = ?",temp.id)
+    end
+  end  
 end
