@@ -1,35 +1,49 @@
-<h2>用户信息</h2>
-用户名：<%= session[:username] %> <br>
-用户ID：<%= session[:id] %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>留言板——个人信息</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="../index.css" />
+</head>
+<body class="indexBody">
+  <div >
+  <h2>用户信息</h2>
+  用户名：<%= session[:username] %> <br>
+  用户ID：<%= session[:id] %>
+  </div>
   <div style="float:right;">
       <a href="<%= session[:username] %>/alterpassword"><button class="btn" >修改密码</button></a>
   </div>
-  <div>
-    <table >
-      <tr align="center" id="head" class="tableHead">
-        <td width="50">留言ID</td>
-        <td width="940">留言内容</td>
-        <td width="100">留言作者</td>
-        <td width="130">创建时间</td>
-        <td width="50">操作</td>
-      </tr>
+  <div style="float:right;">
+      <a href="../"><button class="btn" >返回主页</button></a>
+  </div>  
+  <div class="tableDiv">
+    <div>
+      <table >
+        <tr align="center" id="head" class="tableHead">
+          <td width="50">留言ID</td>
+          <td width="940">留言内容</td>
+          <td width="130">创建时间</td>
+          <td width="50">操作</td>
+        </tr>
 
-      <% i=@query_msg.size-1 ;while i >= 0 %>  
-      <tr align="center" class="indexTable">
-        <td><%= @query_msg[i].id %></td>
-        <td align="left" height="20" ><%= @query_msg[i].msg  %></td>
-        <td><%= @query_msg[i].author %></td>
-        <td><%= @query_msg[i].create_time.strftime("%Y年%m月%d日\n%H点%M分")  %></td>
+        <% i=@query_msg.size-1 ;while i >= 0 %>  
+        <tr align="center" class="indexTable">
+          <td><%= @query_msg[i].id %></td>
+          <td align="left" height="20" ><%= @query_msg[i].msg  %></td>
+          <td><%= @query_msg[i].create_time.strftime("%Y年%m月%d日\n%H点%M分")  %></td>
 
-          <td>
-            <% if session[:id]==@query_msg[i].user_id  %>
-            <a href="/delete/<%= @query_msg[i].id %>" ><button class="btn">删除</button></a>
-            <a href="/edit/<%= @query_msg[i].id %>"   ><button class="btn">编辑</button></a>
-            <% end %>
-          </td>
+            <td>
+              <% if session[:id]==@query_msg[i].user_id  %>
+              <a href="/delete/<%= @query_msg[i].id %>" ><button class="btn">删除</button></a>
+              <a href="/edit/<%= @query_msg[i].id %>"   ><button class="btn">编辑</button></a>
+              <% end %>
+            </td>
 
-      </tr>
-      <% i -= 1 %>
-      <% end %>  
-    </table>
+        </tr>
+        <% i -= 1 %>
+        <% end %>  
+      </table>
+    </div>
   </div>
+</body>  

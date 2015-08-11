@@ -23,8 +23,6 @@ get '/' do
       temp_array.push(temp)
     end
     @query_msg = temp_array
-  elsif params[:mode]=="author" 
-    @query_msg = manager.query_by_author(params[:query].strip)
   elsif params[:mode]=="username" 
     @query_msg = manager.query_by_user(params[:query].strip)  
   else
@@ -41,7 +39,7 @@ end
 post '/add' do
   return redirect to ('/') if params[:addCncl] == '取消'
   begin
-    manager.add(params[:new_content], params[:new_author],session[:id]) 
+    manager.add(params[:new_content], session[:id]) 
     redirect to ('/')
   rescue Exception => e
     @message = {status: 'danger', desc: e.message }
@@ -67,20 +65,18 @@ get '/edit/:id' do
   end
   msg_need_edit = manager.query_by_id(params[:id])
   @origin_msg = msg_need_edit.msg
-  @origin_author = msg_need_edit.author
   erb :edit
 end
 
 post '/edit/:id' do
   return redirect to ('/') if params[:editCncl] == '取消'
   begin
-    manager.edit(params[:id], params[:editContent], params[:editAuthor]) 
+    manager.edit(params[:id], params[:editContent]) 
     redirect to ('/')
   rescue Exception => e
     @editID = params[:id]
     @message = {status: 'danger', desc: e.message }
     @origin_msg = params[:editContent]
-    @origin_author = params[:editAuthor]
     erb :edit
   end
 end
@@ -140,6 +136,11 @@ post '/user/:username/alterpassword' do
     @message = {status: 'danger', desc: e.message }
     erb :alter
   end
+end
+
+get '/logoff' do 
+  session[:admin] = false
+  redirect to '/signin'
 end
 
 not_found do

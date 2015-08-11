@@ -14,9 +14,8 @@ end
 
 class MsgManager 
 
-  def add(msg,author,user_id)
+  def add(msg, user_id)
     raise '留言不可以少于十个字' if msg.strip.length <10
-    raise '作者不能少于两个字' if author.strip.length <2
     temp = Message.new
     temp.msg = msg.strip  
     temp.author = author.strip
@@ -31,10 +30,9 @@ class MsgManager
     1
   end
 
-  def edit(id,msg,author)
+  def edit(id, msg)
     edt = Message.find_by(id: id)
     raise '留言不可以少于十个字' if msg.strip.length <10
-    raise '作者不能少于两个字' if author.strip.length <2
     edt.msg = msg.strip
     edt.author = author.strip
     edt.save    
