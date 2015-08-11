@@ -9,8 +9,12 @@ require 'sass'
 manager = MsgManager.new
 usermgr = UsrManager.new
 after { ActiveRecord::Base.connection.close }   #及时断开数据库连接，避免拥堵导致超时
-use Rack::Session::Pool, :expire_after => 60*2   #设置Session超时2分钟
+use Rack::Session::Pool, :expire_after => 60*5   #设置Session超时5分钟
 enable :sessions
+
+get '/index' do 
+  redirect to('/')
+end
 
 get '/' do
   redirect to '/signin' unless session[:admin]==true  #判断是否已经登陆，未登录则跳转到登录页面，下同
@@ -74,7 +78,14 @@ get '/:username/edit/:id'  do
 end
 
 post '/:username/edit/:id' do
-  return redirect to ("/#{params[:username]}") if params[:editCncl] == '取消'
+  if params[:editCncl] == '取消' 
+    # return redirect to ("/#{params[:username]}") 
+    if params[:username] == 'index'
+      redirect to '/'
+    else
+      redirect to ("/#{params[:username]}")
+    end
+  end
   begin
     manager.edit(params[:id], params[:editContent]) 
     if params[:username] == 'index'
@@ -124,12 +135,6 @@ post '/signin' do
   end
 end
 
-get '/:username' do
-  redirect to '/signin' unless session[:admin]==true
-  @query_msg = manager.query_by_user(session[:username].strip)
-  erb :info
-end
-
 get '/:username/alterpassword' do
   redirect to '/signin' unless session[:admin]==true
   erb :alter
@@ -150,6 +155,12 @@ end
 get '/logoff' do 
   session[:admin] = false
   redirect to '/signin'
+end
+
+get '/:username' do
+  redirect to '/signin' unless session[:admin]==true
+  @query_msg = manager.query_by_user(session[:username].strip)
+  erb :info
 end
 
 not_found do

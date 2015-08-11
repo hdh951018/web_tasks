@@ -4,24 +4,39 @@
   <title>留言板——注册</title>
   <link rel="stylesheet" type="text/css" href="./index.css" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <script src="/scripts/jquery.min.js"></script>
+  <script src="/bootstrap/js/bootstrap.min.js"></script>   
 </head>
 
-<body  background="../bkg6.jpg" > <!-- 需修改 -->
-
-  <div class="signDiv">
-    <form action="/signup"  method="post" >
-      <input type="text" name="new_username" placeholder="用户名" class="MsgText" value="<%= params[:new_username] %>">
-      <input type="password" name="new_password" placeholder="密码" class="MsgText" >
-      <input type="password" name="new_password2" placeholder="确认密码" class="MsgText" >
-      <input type="submit" name="regSub"   value="注册" class="MsgBtn">
-      <input type="submit" name="regCncl"  value="取消" class="MsgBtn">
-    </form>
-  </div>
-  <% if @message %>
-    <div class="alert alert-<%= @message[:status] %>" role="alert">
-      <%= @message[:desc] %>
+<body > 
+  <div style="background-color:#F2F2F2;">
+    <% if @message %>
+      <div class="alert alert-<%= @message[:status] %>" role="alert">
+        <%= @message[:desc] %>
+      </div>
+    <% end %>
+    <div class="div-container-sign" >
+      <form action="/signup"  method="post" >
+        <div class="form-group">
+          <span class="glyphicon glyphicon-user" style="color: rgb(50, 162, 27); font-size: 16px;"></span>
+          <input type="text" name="new_username" placeholder="用户名"  value="<%= params[:new_username] %>">
+        </div>
+        <div class="form-group">
+          <span class="glyphicon glyphicon-lock" style="color: rgb(50, 162, 27); font-size: 16px;"></span>
+          <input type="password" name="new_password" placeholder="密码"  >
+        </div>
+        <div class="form-group">  
+          <span class="glyphicon glyphicon-lock" style="color: rgb(50, 162, 27); font-size: 16px;"></span>
+          <input type="password" name="new_password2" placeholder="确认密码"  >
+        </div>
+        <div class="form-group">
+        <input type="submit" name="regSub"   value="注册" class="btn btn-success" style=" font-size: 14px;">
+        <input type="submit" name="regCncl"  value="取消" class="btn" style=" font-size: 14px;">
+        </div>
+      </form>
     </div>
-  <% end %>        
+  </div>
 </body>
 
 </html>
