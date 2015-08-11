@@ -3,9 +3,9 @@ require 'mysql2'
 
 
 ActiveRecord::Base.establish_connection(:adapter => "mysql2",
-  :host => "127.0.0.1", 
-  :username =>"root",
-  :password =>"JasonSi",
+  :host     => "127.0.0.1", 
+  :username => "root",
+  :password => "JasonSi",
   :database => "msgboard")  
 
 class Message < ActiveRecord::Base
@@ -18,7 +18,6 @@ class MsgManager
     raise '留言不可以少于十个字' if msg.strip.length <10
     temp = Message.new
     temp.msg = msg.strip  
-    temp.author = author.strip
     temp.user_id = user_id
     temp.save
   end
@@ -27,14 +26,12 @@ class MsgManager
     del = Message.find_by(id: id)
     return 0 if del == nil
     del.destroy
-    1
   end
 
   def edit(id, msg)
     edt = Message.find_by(id: id)
     raise '留言不可以少于十个字' if msg.strip.length <10
     edt.msg = msg.strip
-    edt.author = author.strip
     edt.save    
   end
 

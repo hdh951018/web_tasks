@@ -3,7 +3,7 @@
 <head>
   <title>留言板——编辑留言</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link rel="stylesheet" type="text/css" href="../index.css" />
+  <link rel="stylesheet" type="text/css" href="./index.css" />
 </head>
 <body background="../bkg4.jpg">
   <% if @message %>
@@ -13,7 +13,7 @@
     </script>
   <% end %>
   <div class="addDiv">
-    <form action="/edit/<%= @editID %>"  method="post" >
+    <form action="/<%= params[:username] %>/edit/<%= @editID %>"  method="post" >
       <textarea name="editContent" placeholder="内容不少于10字" autofocus="autofocus" 
       wrap="hard" class="MsgTextarea" id="edit"><%= @origin_msg %></textarea><br>
     <input type="submit" name="editSub"  value="确定" class="MsgBtn">

@@ -3,9 +3,9 @@ require 'mysql2'
 require 'digest/sha1'
 
 ActiveRecord::Base.establish_connection(:adapter => "mysql2",
-  :host => "127.0.0.1", 
-  :username =>"root",
-  :password =>"JasonSi",
+  :host     => "127.0.0.1", 
+  :username => "root",
+  :password => "JasonSi",
   :database => "msgboard")  
 
 class User < ActiveRecord::Base
@@ -16,12 +16,11 @@ class UsrManager
     validate(username,userpassword,userpassword2)
     temp = User.new
     temp.username = username
-    # temp.userpassword = userpassword    #此处要改为加密后保存
-    temp.userpassword = Digest::SHA1.hexdigest(userpassword)
+    temp.userpassword = Digest::SHA1.hexdigest(userpassword) #使用SHA1加密后储存密码
     temp.save
   end
 
-  def signin(account,password) #可以考虑另写方法，判断纯数字就通过id登陆，非纯数字就匹配username
+  def signin(account,password)          #判断：纯数字就通过id登陆，非纯数字就匹配username
     if account.to_i.to_s == account         #纯数字，通过id登录
       if User.find_by(id: account)==nil
         raise '该ID不存在'

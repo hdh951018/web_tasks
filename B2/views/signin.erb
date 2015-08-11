@@ -2,11 +2,11 @@
 <html>
 <head>
   <title>留言板——登录</title>
-  <link rel="stylesheet" type="text/css" href="../index.css" />
+  <link rel="stylesheet" type="text/css" href="./index.css" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 
-<body  background="../bkg6.jpg" > <!-- 需修改 -->
+<body  background="../bkg6.jpg" > 
 
   <div class="signDiv">
     <form action="/signin"  method="post" >
@@ -14,7 +14,7 @@
       <input type="password" name="login_password" placeholder="密码" class="MsgText" >
       <input type="submit" name="regSub"   value="登录" class="MsgBtn">
     </form>
-    <a href="signup"><button class="MsgBtn" >注册</button></a>
+    <a href="signup"><button class="MsgBtn" >注册新账号</button></a>
   </div>
   <% if @message %>
     <div class="alert alert-<%= @message[:status] %>" role="alert">

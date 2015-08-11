@@ -8,18 +8,18 @@ require 'sass'
 
 manager = MsgManager.new
 usermgr = UsrManager.new
-after { ActiveRecord::Base.connection.close }
-use Rack::Session::Pool, :expire_after => 120
+after { ActiveRecord::Base.connection.close }   #及时断开数据库连接，避免拥堵导致超时
+use Rack::Session::Pool, :expire_after => 60*2   #设置Session超时2分钟
 enable :sessions
 
 get '/' do
-  redirect to '/signin' unless session[:admin]==true
+  redirect to '/signin' unless session[:admin]==true  #判断是否已经登陆，未登录则跳转到登录页面，下同
   @query_msg = Message.order(:create_time)
   if params[:query]==''
     @query_msg = Message.order(:create_time)
   elsif params[:mode]=="id" 
     temp_array = Array.new
-    if (temp=manager.query_by_id(params[:query].strip))!=nil #如果返回值nil，则未发现匹配的ID，直接使用空数组
+    if (temp=manager.query_by_id(params[:query].strip))!=nil 
       temp_array.push(temp)
     end
     @query_msg = temp_array
@@ -47,16 +47,21 @@ post '/add' do
   end
 end
 
-get '/delete/:id'  do
+get '/:username/delete/:id'  do
   redirect to '/signin' unless session[:admin]==true
   if manager.query_by_id(params[:id])==nil ||
-    manager.query_by_id(params[:id]).user_id != session[:id] #确定是当前用户的留言，否则不予操作
+    manager.query_by_id(params[:id]).user_id != session[:id] #确定是当前用户的留言，否则不予操作，下同
     return '404 <br>NOT FOUND'  
   end  
-  erb :deleted
+  manager.delete(params[:id])
+  if params[:username] == 'index'             #在主页删除时返回主页，在个人信息删除时返回到个人信息，下同
+    erb :deleted
+  else
+    redirect to ("/#{params[:username]}")     #直接删除，暂无反馈
+  end
 end
 
-get '/edit/:id' do 
+get '/:username/edit/:id'  do
   redirect to '/signin' unless session[:admin]==true
   @editID = params[:id]
   if manager.query_by_id(params[:id])==nil ||
@@ -68,11 +73,15 @@ get '/edit/:id' do
   erb :edit
 end
 
-post '/edit/:id' do
-  return redirect to ('/') if params[:editCncl] == '取消'
+post '/:username/edit/:id' do
+  return redirect to ("/#{params[:username]}") if params[:editCncl] == '取消'
   begin
     manager.edit(params[:id], params[:editContent]) 
-    redirect to ('/')
+    if params[:username] == 'index'
+      redirect to '/'
+    else
+      redirect to ("/#{params[:username]}")
+    end
   rescue Exception => e
     @editID = params[:id]
     @message = {status: 'danger', desc: e.message }
@@ -82,7 +91,7 @@ post '/edit/:id' do
 end
 
 get '/signup' do 
-  session[:admin] = false
+  session[:admin] = false     #注册时关闭session，以免 注册后跳转登录页面 会直接登录原账号
   erb :signup
 end
 
@@ -115,22 +124,22 @@ post '/signin' do
   end
 end
 
-get '/user/:username' do
+get '/:username' do
   redirect to '/signin' unless session[:admin]==true
   @query_msg = manager.query_by_user(session[:username].strip)
   erb :info
 end
 
-get '/user/:username/alterpassword' do
+get '/:username/alterpassword' do
   redirect to '/signin' unless session[:admin]==true
   erb :alter
 end
 
-post '/user/:username/alterpassword' do
-  return redirect to ("/user/#{session[:username]}") if params[:altCncl] == '取消'
+post '/:username/alterpassword' do
+  return redirect to ("/#{session[:username]}") if params[:altCncl] == '取消'
   begin
     usermgr.alterpass(session[:username], params[:old_password], params[:new_password],params[:new_password2]) 
-    session[:admin] = false
+    session[:admin] = false     #修改密码如果成功则自动注销，需要重新登录
     redirect to ('/signin')
   rescue Exception => e
     @message = {status: 'danger', desc: e.message }

@@ -21,7 +21,7 @@
       <a href="add"><button class="btn" >添加留言</button></a>
     </div>
     <div style="float:right;">
-      <a href= "user/<%= session[:username] %>"><button class="btn" >个人信息</button></a>
+      <a href= "<%= session[:username] %>"><button class="btn" >个人信息</button></a>
     </div>
     <div style="float:right;">
       <a href= "logoff"><button class="btn" >注销</button></a>
@@ -45,8 +45,8 @@
 
           <td>
             <% if session[:id]==@query_msg[i].user_id  %>
-            <a href="/delete/<%= @query_msg[i].id %>" ><button class="btn">删除</button></a>
-            <a href="/edit/<%= @query_msg[i].id %>"   ><button class="btn">编辑</button></a>
+            <a href="/index/delete/<%= @query_msg[i].id %>" ><button class="btn">删除</button></a>
+            <a href="/index/edit/<%= @query_msg[i].id %>"   ><button class="btn">编辑</button></a>
             <% end %>
           </td>
 
