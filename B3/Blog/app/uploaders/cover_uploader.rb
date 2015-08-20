@@ -20,7 +20,7 @@ class CoverUploader < CarrierWave::Uploader::Base
   def default_url
     # For Rails 3.1+ asset pipeline compatibility:
     # ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
-    "uploads/post/cover/0/default.png"
+    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/0/default.png"
     # "/images/fallback/" + [version_name, "default.png"].compact.join('_')
   end
 
@@ -32,7 +32,7 @@ class CoverUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-  version :cover_small do
+  version :normal do
     process :resize_to_fit => [80, 80]
   end
 

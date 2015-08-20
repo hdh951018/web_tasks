@@ -22,7 +22,7 @@
     <% @posts.each do |post| %>
       <tr>
         <td><%= post.title %></td>
-        <td><%= image_tag post.cover_url(:cover_small) %></td>
+        <td><%= image_tag post.cover_url(:normal) %></td>
         <td><%= post.summary %></td>
         <td><%= post.category %></td>
         <td><%= post.admin_id %></td>

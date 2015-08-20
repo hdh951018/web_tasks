@@ -18,7 +18,7 @@
     <% @posts.each do |post| %>
       <% if post.admin_id==session[:admin_id] %>
         <tr>
-          <td><%= image_tag post.cover_url(:cover_small) %></td>
+          <td><%= image_tag post.cover_url(:normal) %></td>
           <td><%= post.title %></td>
           <td><%= post.summary %></td>
           <td><%= post.category %></td>
