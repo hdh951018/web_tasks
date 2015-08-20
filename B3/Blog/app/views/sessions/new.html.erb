@@ -1,0 +1,66 @@
+<div class="login">
+  <% if flash[:alert] %>
+    <p id="notice"><%= flash[:alert] %></p>
+  <% end %>
+
+  <%= form_tag do %>
+    <fieldset>
+      <legend>请登录</legend>
+      <div>
+        <label for="username">用户名：</label><br>
+        <%= text_field_tag :username , params[:username] %>
+      </div>
+      <div>
+        <label for="password">密码：</label><br>
+        <%= password_field_tag :password , params[:password] %>
+      </div>
+
+      <div>
+        <%= submit_tag "登录" %>
+        <a href="../posts"><button>取消</button></a>
+      </div>
+    </fieldset>
+  <% end %> 
+</div>
+
+
+  <body id="login">
+    <% if flash[:alert] %>
+      <p id="notice"><%= flash[:alert] %></p>
+    <% end %>
+
+    <div class="container">
+      <%= form_tag do %>
+        <fieldset class="form-signin">
+          <legend>请登录</legend>
+          <div class="input-block-level">
+            <label for="username">用户名：</label><br>
+            <%= text_field_tag :username , params[:username] %>
+          </div>
+          <div class="input-block-level">
+            <label for="password">密码：</label><br>
+            <%= password_field_tag :password , params[:password] %>
+          </div>
+
+          <div class="btn btn-large btn-primary">
+            <% submit_tag "登录" %>登录
+          </div>
+          <div class="btn btn-large btn-primary">
+            <a href="../posts"></a>取消
+          </div>
+        </fieldset>
+      <% end %>       
+      <form class="form-signin">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <input type="text" class="input-block-level" placeholder="Email address">
+        <input type="password" class="input-block-level" placeholder="Password">
+        <label class="checkbox">
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+        <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+      </form>
+
+    </div> <!-- /container -->
+    <script src="vendors/jquery-1.9.1.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+  </body>

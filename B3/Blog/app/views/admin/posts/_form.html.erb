@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta charset="utf-8">
+
+
+<style type="text/css" media="screen">
+  .btn.jumbo {
+    font-size: 20px;
+    font-weight: normal;
+    padding: 14px 24px;
+    margin-right: 10px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+  }
+</style>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-30181385-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body>
+<div class="container">
+  <div class="hero-unit" style="margin-top:1px">
+    <h2 style="font-size:58px">编辑文章<small>Simple, beautiful  editors</small></h2>
+    <hr/>
+    <%= form_for([:admin,@post],:html => {:multipart => true}) do |f| %>
+      <% if @post.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+          <ul>
+          <% @post.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div >
+        <%= f.label "文章标题" %> 
+        <%= f.text_field :title %>
+      </div>
+      <div >
+        <%= f.label :category %> 
+        <%= f.text_field :category %>
+      </div>
+      <div >
+        <%= f.label :cover %> 
+        <%= f.file_field :cover %>
+        <%= f.hidden_field :cover_cache %>        
+      </div>
+      <div >
+        <%= f.label :content %> 
+        <%= f.kindeditor :content ,:style => "width: 810px; height: 200px;" %>
+      </div>      
+      <div class="btn">
+        <%=  f.submit %>
+      </div>
+    <% end %>    
+  </div>
+  
+ 
+</body>
+</html>
