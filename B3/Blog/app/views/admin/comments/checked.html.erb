@@ -1,21 +1,20 @@
 <div class="span3" id="sidebar">
   <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
-      <li  class="active">
+      <li >
           <a href="/admin/comments"><i class="icon-chevron-right"></i>全部评论</a>
       </li>
-      <li>
+      <li class="active">
           <a href="/admin/comments/check"><i class="icon-chevron-right"></i>已审核评论</a>
       </li>
-      <li >
+      <li>
           <a href="/admin/comments/uncheck"><i class="icon-chevron-right"></i>未审核评论</a>
       </li>
   </ul>
 </div>
-
 <div class="span9" id="content">
   <p id="notice"><%= notice %></p>
 
-  <h2>全部评论</h2>
+  <h2>已审核评论</h2>
 
   <table class="table table-striped">
     <thead>
@@ -31,19 +30,17 @@
 
     <tbody>
       <% @comments.each do |comment| %>
-        <% if belong_to_admin( comment )%>
+        <% if belong_to_admin( comment )&& comment.is_checked %>
           <tr>
             <td><%= comment.post_id %></td>
             <td><%= comment.email %></td>
             <td><%= comment.name %></td>
             <td><%= comment.content %></td>
             <td><%= comment.is_checked ? "通过" : "未通过" %></td>
-            <td><%= link_to '删除评论', "comments/#{comment.id}", method: :delete, data: { confirm: '你确定要删除吗?' } %></td>
+            <td><%= link_to '删除评论', "/admin/comments/#{comment.id}", method: :delete, data: { confirm: '你确定要删除吗?' } %></td>
           </tr>
         <% end %>
       <% end %>
     </tbody>
   </table>
-
-  
 </div>

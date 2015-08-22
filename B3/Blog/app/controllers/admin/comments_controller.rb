@@ -6,7 +6,22 @@ class Admin::CommentsController < ApplicationController
   def index
     @comments = Comment.all
   end
-
+  def checked
+    @comments = Comment.all
+  end
+  def unchecked
+    @comments = Comment.all 
+  end
+  def check_switch 
+    if params[:check] 
+      params[:check].each do |id|
+        comment = Comment.find_by(id: id)
+        comment.is_checked = (comment.is_checked ? false : true)
+        comment.save
+      end
+    end
+    redirect_to admin_comments_uncheck_url  
+  end
   # GET /comments/1
   # GET /comments/1.json
   def show

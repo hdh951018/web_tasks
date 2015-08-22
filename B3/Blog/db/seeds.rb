@@ -6,12 +6,12 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 Post.delete_all
-10.times do |i|
+20.times do |i|
   t = Post.new
   t.admin_id = i%3+1
   t.title = "拥抱#{i+1}"
   t.cover = ''
-  t.category = "测试"
+  t.category = "默认"
   t.content = "脱下长日的假面 奔向梦幻的疆界 <br>
     南瓜马车的午夜 换上童话的玻璃鞋 <br>
     让我享受这感觉 我是孤傲的蔷薇 <br>
@@ -42,11 +42,11 @@ Post.delete_all
 end
 
 Comment.delete_all
-30.times do |j|
+100.times do |j|
   t = Comment.new
-  t.post_id = j%10+1
+  t.post_id = j%30+1
   t.email = '1234567@qq.com'
-  t.name = "评论者"
+  t.name = "评论的人"
   t.content = (j%3==1)? "不好听啊" : "这歌不错的"
   t.is_checked = (j%2==1)? true : false
   t.save

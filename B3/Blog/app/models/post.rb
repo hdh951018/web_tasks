@@ -13,7 +13,7 @@ class Post < ActiveRecord::Base
   length: { maximum: 16,message: "标题长度不能超过16字" }
 
   validates :content, presence: {value: true,message: "请输入内容"}, 
-  length: { maximum: 100_000,message: "文章内容过长，请适当删减" }
+  length: { maximum: 500_000,message: "文章内容过长，请适当删减" }
 
   validates :admin_id, presence:{value: true,message: "获取当前用户失败，请重新登录后尝试"}
 

@@ -36,12 +36,12 @@
 
 <div class="container">
   <div class="hero-unit" style="margin-top:1px">
-    <h2 style="font-size:58px">编辑文章<small>Simple, beautiful  editors</small></h2>
-    <hr/>
+    <h4 style="font-size:58px">编辑文章<small>Simple, beautiful  editors</small></h4>
+    <hr>
     <%= form_for([:admin,@post],:html => {:multipart => true}) do |f| %>
       <% if @post.errors.any? %>
         <div id="error_explanation">
-          <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+          <h2>发表失败，有以下 <%= pluralize(@post.errors.count,'') %>个错误：</h2>
 
           <ul>
           <% @post.errors.full_messages.each do |message| %>
@@ -56,21 +56,21 @@
         <%= f.text_field :title %>
       </div>
       <div >
-        <%= f.label :category %> 
-        <%= f.text_field :category %>
+        <%= f.label "分类" %> 
+        <%= f.select :category, category_list  %>
       </div>
       <div >
-        <%= f.label :cover %> 
+        <%= f.label "封面" %> 
         <%= f.file_field :cover %>
         <%= f.hidden_field :cover_cache %>        
       </div>
       <div >
-        <%= f.label :content %> 
-        <%= f.kindeditor :content ,:width => 800, :height => 300 %>
+        <%= f.label "正文" %> 
+        <%= f.kindeditor :content ,:width => 800, :height => 500 %>
       </div>      
       <div  >
         <%=  submit_tag "发表文章" ,:class => "btn" %>
-        <button class="btn"><a href="/admin/posts">放弃</a></button>
+        <input type="button" value="取消" class="btn" onclick="javascript:location='/admin/posts';">
       </div>
     <% end %>    
   </div>

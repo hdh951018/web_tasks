@@ -1,7 +1,7 @@
-<%= form_for(@comment) do |f| %>
+<%= form_for([@post,@comment]) do |f| %>
   <% if @comment.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+      <h2>评论发表失败，有以下 <%= pluralize(@comment.errors.count, "") %>个错误：</h2>
 
       <ul>
       <% @comment.errors.full_messages.each do |message| %>
