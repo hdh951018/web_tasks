@@ -7,8 +7,9 @@ class AdminsController < ApplicationController
   def index
     @admins = Admin.all
   end
-  
+
   def welcome
+    render layout: "manage"
   end
   # GET /admins/1
   # GET /admins/1.json
@@ -64,17 +65,19 @@ class AdminsController < ApplicationController
     end
   end
 
-  protected
-  def authorize
-    unless Admin.find_by_id(session[:admin_id])
-      redirect_to login_url , :notice => '请登录'
-    end
-  end
+  # protected
+  # def authorize
+  #   unless Admin.find_by_id(session[:admin_id])
+  #     redirect_to login_url , :notice => '请登录'
+  #   end
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_admin
-      @admin = Admin.find(params[:id])
+      if params[:id].to_i == session[:admin_id]    #增加限制，不允许直接通过url访问其他用户
+        @admin = Admin.find(params[:id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

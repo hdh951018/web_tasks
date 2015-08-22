@@ -5,12 +5,18 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @posts = Post.all
+    unless session[:admin_id]
+      render "index_visitor"
+    end
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
     @comments = Comment.all
+    unless session[:admin_id]
+      render "show_visitor"
+    end
   end
 
   # GET /posts/new
@@ -65,9 +71,7 @@ class PostsController < ApplicationController
   end
 
 
-  def summary  post
-    result = "等会再写"
-  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

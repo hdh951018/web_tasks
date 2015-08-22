@@ -5,9 +5,9 @@ Rails.application.routes.draw do
     post   'login'  => :create
     delete 'logout' => :destroy
   end
-  get 'admin/posts/:id/show'   =>'admin/posts#show_admin'
-  get 'admin/index'            =>'admins#welcome'
-  resources :admins
+  get 'admin/posts/:id/show'    =>'admin/posts#show_admin'
+  get 'admin/index'             =>'admins#welcome'
+  resources :admins, :except => [:index]  #禁止访问主页管理员列表
   namespace :admin do
     resources :posts do
       resources :comments
@@ -20,8 +20,9 @@ Rails.application.routes.draw do
     resources :comments
   end
   resources :feedbacks
-  resources :comments
+  # resources :comments #禁止直接访问
   # resources :posts
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

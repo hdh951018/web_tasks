@@ -1,4 +1,5 @@
 class Admin::PostsController < ApplicationController
+  
   before_action :set_post, only: [:show, :edit, :update, :destroy,:show_admin]
   before_filter :authorize
 
@@ -66,7 +67,7 @@ class Admin::PostsController < ApplicationController
   def destroy
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to admin_posts_url(session[:admin_id]), notice: '文章删除成功' }
+      format.html { redirect_to admin_posts_url, notice: '文章删除成功' }
       format.json { head :no_content }
     end
   end
@@ -82,4 +83,7 @@ class Admin::PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:title, :content, :cover, :admin_id, :category, :summary)
     end
+
+    #通过判断是否登录选择对应的布局
+
 end

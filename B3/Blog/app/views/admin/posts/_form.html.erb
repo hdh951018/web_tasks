@@ -33,6 +33,7 @@
 </script>
 </head>
 <body>
+
 <div class="container">
   <div class="hero-unit" style="margin-top:1px">
     <h2 style="font-size:58px">编辑文章<small>Simple, beautiful  editors</small></h2>
@@ -67,8 +68,9 @@
         <%= f.label :content %> 
         <%= f.kindeditor :content ,:width => 800, :height => 300 %>
       </div>      
-      <div class="btn">
-        <%=  f.submit %>
+      <div  >
+        <%=  submit_tag "发表文章" ,:class => "btn" %>
+        <button class="btn"><a href="/admin/posts">放弃</a></button>
       </div>
     <% end %>    
   </div>

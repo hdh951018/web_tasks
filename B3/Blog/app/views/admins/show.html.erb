@@ -10,16 +10,6 @@
   <%= @admin.nickname %>
 </p>
 
-<p>
-  <strong>Hashed password:</strong>
-  <%= @admin.hashed_password %>
-</p>
-
-<p>
-  <strong>Salt:</strong>
-  <%= @admin.salt %>
-</p>
- 
 <%= button_to '注销' ,logout_path ,:method => :delete %> 
 <%= link_to '修改密码', edit_admin_path  %> 
 <%= link_to '查看我的文章',admin_posts_path  %>

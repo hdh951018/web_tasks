@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= raw(@post.content) %>
+</p>
+
+<p>
+  <strong>Cover:</strong>
+  <%= image_tag @post.cover_url(:normal) %>
+</p>
+
+<p>
+  <strong>Admin:</strong>
+  <%= @post.admin_id %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @post.category %>
+</p>
+
+<p>
+  <strong>Summary:</strong>
+  <%= @post.summary %>
+</p>
+
+<%= link_to 'Back', posts_path %>
+
+<%= link_to '添加评论', new_post_comment_path(@post.id) %>
