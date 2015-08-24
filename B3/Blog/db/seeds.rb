@@ -47,7 +47,7 @@ Comment.delete_all
   t.post_id = j%30+1
   t.email = '1234567@qq.com'
   t.name = "评论的人"
-  t.content = (j%3==1)? "不好听啊" : "这歌不错的"
+  t.content = (j%4==1)? "不好听啊" : "这歌不错的"
   t.is_checked = (j%2==1)? true : false
   t.save
 end

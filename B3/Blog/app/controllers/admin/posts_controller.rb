@@ -22,7 +22,6 @@ class Admin::PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
-    @post.cover = '/uploads/post/cover/0/default.png'
   end
 
   # GET /posts/1/edit

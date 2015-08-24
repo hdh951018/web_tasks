@@ -27,8 +27,6 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     @comment.is_checked = false
     @comment.post_id = session[:post_id].to_i
-    # p params
-    # p '评论自动添加post_id部分'
     respond_to do |format|
       if @comment.save
         format.html { redirect_to post_path(@comment.post_id), notice: '评论发表成功' }

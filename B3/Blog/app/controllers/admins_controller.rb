@@ -25,6 +25,7 @@ class AdminsController < ApplicationController
   end
   def edit_profile
   end
+  #修改密码功能暂时没有，需要一个验证原密码的逻辑，懒
   def edit_password
   end
   # POST /admins
