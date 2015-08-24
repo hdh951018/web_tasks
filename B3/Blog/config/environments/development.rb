@@ -7,7 +7,8 @@ Rails.application.configure do
   config.cache_classes = false
 
   #使用memcached
-  config.cache_store = :dalli_store
+  
+  config.cache_store = :mem_cache_store
   config.action_controller.perform_caching = true
   # Do not eager load code on boot.
   config.eager_load = false
