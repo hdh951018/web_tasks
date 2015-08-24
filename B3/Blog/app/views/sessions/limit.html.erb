@@ -1,5 +1,10 @@
 <div class="content"  >
-  <h2 align="center">尝试次数太多限制登陆，请十分钟后重新登录</h2>
-    <!-- 方便调试实际只要一分钟。。 -->
+  <h2 align="center">尝试次数太多限制登陆</h2><h2 align="center">请十分钟后重新登录</h2>
+  <hr>
+  <h5 align="center">点击<a href="/posts">这里</a>查看全部文章</h5>
 </div>
-<script language='javascript'>setTimeout("javascript:location.href='/login'", 1000*60); </script>
+<script language='javascript'>setTimeout("javascript:location.href='/login'", 1000*60*3); </script>
+<!-- 实际锁定时间并不能达到10分钟，缓存从清理后第一次新建开始，如果尝试的时间间隔较长，
+  可能导致最后一次被锁定的时候失效时间剩的不多，几分钟即可解锁，考虑到在更改代码更加复杂，
+  所以直接换个思路，理解为十分钟只能尝试三次，而不是第三次失败之后开始计时锁定十分钟，
+  为了方便选择3分钟跳转，毕竟如果还在限制还是会跳转回来 -->

@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   # skip_before_filter :authorize
   def new
     session[:admin_id]=nil
-    if Rails.cache.increment("login/ip/#{request.ip}",  0, expires_in: 1.minutes).to_i > 3
+    if Rails.cache.increment("login/ip/#{request.ip}",  0, expires_in: 10.minutes).to_i > 3
       render :limit
     else
       # login form
@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
     # end
     session[:admin_id]=nil
     #使用缓存判断是否达到限制次数
-    if Rails.cache.increment("login/ip/#{request.ip}", 1, expires_in: 1.minutes) > 3
+    if Rails.cache.increment("login/ip/#{request.ip}", 1, expires_in: 10.minutes) > 3
       #如果达到三次就渲染禁止登录模板
       render :limit
     else
