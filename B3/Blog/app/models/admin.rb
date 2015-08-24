@@ -1,5 +1,6 @@
 require 'digest/sha2'
 class Admin < ActiveRecord::Base
+  mount_uploader :avatar, AvatarUploader
   has_many :posts 
   has_many :comments
   has_many :feedbacks
@@ -10,11 +11,15 @@ class Admin < ActiveRecord::Base
       message: "用户名只能由数字和小写字母组成，且开头不能为数字" }
 
   validates :password,confirmation: {value: true,message: "两次输入密码不一致"},
-    length:{minimum: 6,maximum: 16,message: "密码长度必须在6-16个字符之间"}
+    length:{minimum: 6,maximum: 16,message: "密码长度必须在6-16个字符之间"},
+    :allow_nil => true  #便于修改个人信息
 
 
   validates :nickname,presence: {value: true, message: "昵称不能为空"},
     length: {minimum: 2,maximum: 10,message: "昵称长度必须在2-10个字符之间"}
+
+  validates :description,length: {maximum: 100,message: "个人简介请不要超过100字"}
+  validates :avatar,length:{maximum: 10000,}, :allow_nil => true
   attr_accessor :password_confirmation
   attr_reader :password
   validate :password_must_be_present

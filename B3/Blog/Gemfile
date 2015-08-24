@@ -1,10 +1,10 @@
 source 'https://ruby.taobao.org' #更换为淘宝镜像
 
-
+gem 'dalli'
 gem 'carrierwave' #上传图片
 gem 'mini_magick' #裁剪图片
 gem 'bootstrap-sass'
-gem 'sprockets'
+gem 'sprockets' 
 gem 'rails_kindeditor' #富文本编辑器
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'

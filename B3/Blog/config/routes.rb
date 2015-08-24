@@ -5,26 +5,28 @@ Rails.application.routes.draw do
     post   'login'  => :create
     delete 'logout' => :destroy
   end
+  get 'admins/:id/password'     =>'admins#edit_password'
+  get 'admins/:id/profile'     =>'admins#edit_profile'
   get 'admin/posts/:id/show'    =>'admin/posts#show_admin'
   get 'admin/index'             =>'admins#welcome'
   get 'admin/comments/check'    =>'admin/comments#checked'
   get 'admin/comments/uncheck'  =>'admin/comments#unchecked'
   post'admin/comments/check'    =>'admin/comments#check_switch'
   post'admin/comments/uncheck'  =>'admin/comments#check_switch'
-
+  # get 'index'                   =>'posts'
   resources :admins, :except => [:index]  #禁止访问主页管理员列表
   namespace :admin do
     resources :posts do
       resources :comments
     end
-    resources :feedbacks
+    resources :feedbacks,:except => [:new,:edit,:update,:create] 
     resources :comments, :except => [:show] 
   end
 
-  resources :posts, :only => [:index, :show]do
-    resources :comments
+  resources :posts,:except =>[:new,:create,:edit,:update,:destroy] do
+    resources :comments,:except =>[:destroy,:update,:index,:edit]
   end
-  resources :feedbacks
+  resources :feedbacks,:only => [:new,:create]
   # resources :comments #禁止直接访问
   # resources :posts
 

@@ -53,7 +53,7 @@ Comment.delete_all
 end
 
 Admin.delete_all
-for x in 1...3
+for x in 1..3
   t = Admin.new
   t.username = "admin#{x}"
   if x == 1
@@ -61,6 +61,8 @@ for x in 1...3
   else
     t.nickname = "战斗鸡排饭#{x}"
   end
+  t.description = "这个人很懒，什么都没有留下..."
+  t.avatar = ''
   t.password = "123123"
   t.save
 end

@@ -33,3 +33,26 @@
 <%= link_to 'Back', posts_path %>
 
 <%= link_to '添加评论', new_post_comment_path(@post.id) %>
+<div>
+  <table>
+  <thead>
+    <tr>
+      <th>姓名</th>
+      <th>评论</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comments.each do |comment| %>
+      <% if comment.post_id == @post.id && comment.is_checked  %>
+        <tr>
+          <td><%= comment.name %></td>
+          <td><%= comment.content %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+</div>

@@ -1,0 +1,51 @@
+<div class="span3" id="sidebar">
+  <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
+      <li >
+          <a href="/admins/<%= session[:admin_id]%>"><i class="icon-chevron-right"></i>我的信息</a>
+      </li>
+      <li class="active">
+          <a href="/admins/<%= session[:admin_id]%>/profile"><i class="icon-chevron-right"></i>修改信息</a>
+      </li>
+
+  </ul>
+</div>
+
+<div class="span9" id="content">
+<h1>修改个人资料</h1>
+
+  <%= form_for((@admin),:html => {:multipart => true} )do |f| %>
+    <% if @admin.errors.any? %>
+      <div >
+        <h2><%= pluralize(@admin.errors.count, "error") %>导致修改失败，请重新修改</h2>
+
+        <ul>
+        <% @admin.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :username,"用户名" %> 
+      <%= f.text_field :username, :size => 30 %>
+    </div>
+    <div class="field">
+      <%= f.label :avatar,"修改头像" %> 
+      <%= image_tag @admin.avatar_url(:normal) %>
+      <%= f.file_field :avater %>
+    </div>
+    <div class="field">
+      <%= f.label :nickname,"昵称" %> 
+      <%= f.text_field :nickname,:size => 30 %>
+    </div>
+    <div class="field">
+      <%= f.label :description,"个人简介" %> 
+      <%= f.text_area :description,:style => "height:100px;"  %>
+    </div>
+
+    <div class="actions">
+      <%= submit_tag "确定修改" ,:class => "btn" %>
+    </div>
+  <% end %>
+</div>

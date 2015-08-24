@@ -12,9 +12,14 @@
       <%= session[:nickname] %>
       <%= image_tag @post.cover_url(:normal), :class => "img-rounded" %>
     </p>    
-    <div >
+    <div style="margin-bottom:20px;">
       <%= raw(@post.content) %>
     </div>
+  </div>
+  <div>
+    <%= link_to '删除', ".", method: :delete, data: { confirm: '确定要删除这篇文章吗?' },:class => 'btn' %>
+    <%= link_to '编辑', edit_admin_post_path,'data-no-turbolink' => true,:class => 'btn'  %> |
+    <%= link_to '返回', admin_posts_path,:class => 'btn' %>
   </div>
   <div class="table">
     <table>
@@ -66,9 +71,5 @@
       </tbody>
     </table>
   </div>
-  <div>
-    <%= link_to '删除', ".", method: :delete, data: { confirm: '确定要删除这篇文章吗?' } %>
-    <%= link_to '编辑', edit_admin_post_path,'data-no-turbolink' => true  %> |
-    <%= link_to '返回', admin_posts_path %>
-  </div>
+
 </div>

@@ -31,7 +31,7 @@ class CommentsController < ApplicationController
     # p '评论自动添加post_id部分'
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to post_path(@comment.post_id), notice: 'Comment was successfully created.' }
+        format.html { redirect_to post_path(@comment.post_id), notice: '评论发表成功' }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new }

@@ -9,6 +9,7 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
   def login_as(admin)
     session[:admin_id] = admins(admin).id
+    session[:nickname] = admins(admin).nickname
   end
 
   def logout 

@@ -30,7 +30,7 @@
     </thead>
 
     <tbody>
-      <% @comments.each do |comment| %>
+      <% @comments.reverse_each do |comment| %>
         <% if belong_to_admin( comment )%>
           <tr>
             <td><%= comment.post_id %></td>
