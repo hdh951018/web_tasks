@@ -2,11 +2,6 @@ require 'active_record'
 require 'mysql2'
 require 'digest/sha1'
 
-ActiveRecord::Base.establish_connection(:adapter => "mysql2",
-  :host     => "127.0.0.1", 
-  :username => "root",
-  :password => "JasonSi",
-  :database => "msgboard")  
 
 class User < ActiveRecord::Base
 end

@@ -2,20 +2,12 @@ require 'active_record'
 require 'mysql2'
 
 
-ActiveRecord::Base.establish_connection(:adapter => "mysql2",
-  :host     => "127.0.0.1", 
-  :username => "root",
-  :password => "JasonSi",
-  :database => "msgboard")  
-
 class Message < ActiveRecord::Base
-end
-
-
-class MsgManager 
+  validates :msg ,presence:{value: true,message: "请输入留言内容"},
+    length:{minimum: 10, message: "内容不足十个字"}
 
   def add(msg, user_id)
-    raise '留言不可以少于十个字' if msg.strip.length <10
+    # raise '留言不可以少于十个字' if msg.strip.length <10
     temp = Message.new
     temp.msg = msg.strip  
     temp.user_id = user_id

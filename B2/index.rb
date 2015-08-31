@@ -6,10 +6,18 @@ require './MessageManage.rb'
 require './UserManage.rb'
 require 'sass'
 
-manager = MsgManager.new
+
+#降低数据库连接频率
+ActiveRecord::Base.establish_connection(:adapter => "mysql2",
+  :host     => "127.0.0.1", 
+  :username => "root",
+  :password => "JasonSi",
+  :database => "msgboard")  
+
+manager = Message.new
 usermgr = UsrManager.new
 after { ActiveRecord::Base.connection.close }   #及时断开数据库连接，避免拥堵导致超时
-use Rack::Session::Pool, :expire_after => 60*5   #设置Session超时5分钟
+use Rack::Session::Pool, :expire_after => 60*20   #设置Session超时20分钟
 enable :sessions
 
 get '/index' do 
@@ -22,13 +30,21 @@ get '/' do
   if params[:query]==''
     @query_msg = Message.order(:create_time)
   elsif params[:mode]=="id" 
-    temp_array = Array.new
-    if (temp=manager.query_by_id(params[:query].strip))!=nil 
-      temp_array.push(temp)
-    end
-    @query_msg = temp_array
+    # temp_array = Array.new
+    # if (temp=Message.find_by(id: params[:query].strip))!=nil 
+    #   temp_array.push(temp)
+    # end
+
+    #直接用where方法查询，查不到返回空数组，省心-。-
+    @query_msg = Message.where("id = ?",params[:query])
   elsif params[:mode]=="username" 
-    @query_msg = manager.query_by_user(params[:query].strip)  
+    #先查找是否存在此用户名，若没找到返回空数组，若存在，则通过id搜索相关留言
+    temp = User.find_by(username: params[:query].strip)
+    if temp==nil
+      @query_msg = []
+    else
+      @query_msg = Message.where("user_id = ?",temp.id)
+    end
   else
     return erb :index
   end
@@ -37,16 +53,25 @@ end
 
 get '/add' do 
   redirect to '/signin' unless session[:admin]==true
+  @new_message = Message.new
   erb :add
 end
 
 post '/add' do
   return redirect to ('/') if params[:addCncl] == '取消'
-  begin
-    manager.add(params[:new_content], session[:id]) 
-    redirect to ('/')
-  rescue Exception => e
-    @message = {status: 'danger', desc: e.message }
+  # begin
+  #   manager.add(params[:new_content], session[:id]) 
+  #   redirect to ('/')
+  # rescue Exception => e
+  #   @message = {status: 'danger', desc: e.message }
+  #   erb :add
+  # end
+  @new_message = Message.new
+  @new_message.msg = params[:new_content]
+  @new_message.user_id = session[:id]
+  if @new_message.save
+    redirect to "/"
+  else
     erb :add
   end
 end
@@ -67,36 +92,48 @@ end
 
 get '/:username/edit/:id'  do
   redirect to '/signin' unless session[:admin]==true
-  @editID = params[:id]
-  if manager.query_by_id(params[:id])==nil ||
-    manager.query_by_id(params[:id]).user_id != session[:id]
+  @edit_message = Message.find_by(id: params[:id])
+  #防止恶意访问限制url
+  if Message.find_by(id: params[:id])==nil ||
+    Message.find_by(id: params[:id]).user_id != session[:id]
     return '404 <br>NOT FOUND'  
   end
-  msg_need_edit = manager.query_by_id(params[:id])
-  @origin_msg = msg_need_edit.msg
+  params[:editContent] = Message.find_by(id: params[:id]).msg
   erb :edit
 end
 
 post '/:username/edit/:id' do
+  #加入:username 是为了便于取消时判断返回路径，应该有更好的办法，我不改，我选择死亡。
   if params[:editCncl] == '取消' 
-    # return redirect to ("/#{params[:username]}") 
     if params[:username] == 'index'
-      redirect to '/'
+      redirect to "/"
     else
       redirect to ("/#{params[:username]}")
     end
   end
-  begin
-    manager.edit(params[:id], params[:editContent]) 
+  # begin
+  #   manager.edit(params[:id], params[:editContent]) 
+  #   if params[:username] == 'index'
+  #     redirect to '/'
+  #   else
+  #     redirect to ("/#{params[:username]}")
+  #   end
+  # rescue Exception => e
+  #   @editID = params[:id]
+  #   @message = {status: 'danger', desc: e.message }
+  #   @origin_msg = params[:editContent]
+  #   erb :edit
+  # end
+  @edit_message = Message.find_by(id: params[:id])
+  @edit_message.msg = params[:editContent].strip
+  if @edit_message.save
     if params[:username] == 'index'
       redirect to '/'
     else
       redirect to ("/#{params[:username]}")
     end
-  rescue Exception => e
-    @editID = params[:id]
-    @message = {status: 'danger', desc: e.message }
-    @origin_msg = params[:editContent]
+  else
+    # @editID = params[:id]
     erb :edit
   end
 end

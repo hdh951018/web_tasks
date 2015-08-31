@@ -10,12 +10,18 @@
 </head>
 
 <body >
+
   <div style="background-color:#F2F2F2;">
-    <% if @message %>
-      <div class="alert alert-<%= @message[:status] %>" role="alert">
-        <%= @message[:desc] %>
+    <% if @new_message.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger " role="alert">
+        <ul>
+        <% @new_message.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
       </div>
-    <% end %> 
+    <% end %>
+
     <div class="input-container" >
       <form action="/add"  method="post" >
         <textarea name="new_content" placeholder="请添加留言，内容不少于10字" autofocus="autofocus" 

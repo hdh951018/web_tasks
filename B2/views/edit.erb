@@ -11,15 +11,19 @@
 
 <body >
   <div style="background-color:#F2F2F2;">
-    <% if @message %>
-      <div class="alert alert-<%= @message[:status] %>" role="alert">
-        <%= @message[:desc] %>
+    <% if @edit_message.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger " role="alert">
+        <ul>
+        <% @edit_message.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
       </div>
     <% end %>
     <div class="input-container">
-      <form action="/<%= params[:username] %>/edit/<%= @editID %>"  method="post" >
+      <form action="/<%= params[:username] %>/edit/<%= params[:id] %>"  method="post" >
         <textarea name="editContent" placeholder="请添加留言，内容不少于10字" autofocus="autofocus" 
-        wrap="hard" class="input-textfield" ><%= @origin_msg %></textarea><br>
+        wrap="hard" class="input-textfield" ><%= params[:editContent]  %></textarea><br>
       <input type="submit" name="editSub"  value="确定" class="btn btn-success">
       <input type="submit" name="editCncl" value="取消" class="btn btn-danger">
       </form>
