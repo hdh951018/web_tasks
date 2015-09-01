@@ -2,6 +2,7 @@ require 'active_record'
 require 'mysql2'
 
 
+
 class Message < ActiveRecord::Base
   belongs_to :user
   validates :msg ,presence:{value: true,message: "请输入留言内容"},
