@@ -49,7 +49,11 @@
 
           <td>
             <% if session[:id]==@query_msg[i].user_id  %>
-            <a href="/index/delete/<%= @query_msg[i].id %>" ><button class="btn btn-sm"><span class="glyphicon glyphicon-trash" style="color: rgb(247, 47, 56); font-size: 14px;"> 删除</span></button></a>
+            
+            <form action="/delete/<%= @query_msg[i].id %>" method="get">
+            <button type="submit" name="ret" value="index" class="btn btn-sm"><span class="glyphicon glyphicon-trash" style="color: rgb(247, 47, 56); font-size: 14px;"> 删除</span></button>
+            </form>
+
             <a href="/index/edit/<%= @query_msg[i].id %>"   ><button class="btn btn-sm"><span class="glyphicon glyphicon-edit" style="color: rgb(49, 142, 147); font-size: 14px;"> 编辑</span></button></a>
             <% end %>
           </td>

@@ -77,17 +77,31 @@ post '/add' do
   end
 end
 
-get '/:username/delete/:id'  do
+# get '/:username/delete/:id'  do
+#   redirect to '/signin' unless session[:admin]==true
+#   if manager.query_by_id(params[:id])==nil ||
+#     manager.query_by_id(params[:id]).user_id != session[:id] #确定是当前用户的留言，否则不予操作，下同
+#     return '404 <br>NOT FOUND'  
+#   end  
+#   manager.delete(params[:id])
+#   if params[:username] == 'index'             #在主页删除时返回主页，在个人信息删除时返回到个人信息，下同
+#     erb :deleted
+#   else
+#     redirect to ("/#{params[:username]}")     #直接删除，暂无反馈
+#   end
+# end
+
+get '/delete/:id'  do
   redirect to '/signin' unless session[:admin]==true
   if manager.query_by_id(params[:id])==nil ||
     manager.query_by_id(params[:id]).user_id != session[:id] #确定是当前用户的留言，否则不予操作，下同
     return '404 <br>NOT FOUND'  
   end  
   manager.delete(params[:id])
-  if params[:username] == 'index'             #在主页删除时返回主页，在个人信息删除时返回到个人信息，下同
+  if params[:ret] == 'index'             #在主页删除时返回主页，在个人信息删除时返回到个人信息，下同
     erb :deleted
   else
-    redirect to ("/#{params[:username]}")     #直接删除，暂无反馈
+    redirect to ("/#{session[:username]}")     #直接删除，暂无反馈
   end
 end
 
