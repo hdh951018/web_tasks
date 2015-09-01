@@ -2,10 +2,10 @@ require 'sinatra'
 require 'erb'
 require 'active_record'
 require 'mysql2'
-require './MessageManage.rb'
-require './UserManage.rb'
+require './Message.rb'
+require './User.rb'
 require 'sass'
-
+# require 'digest/sha1'
 
 #降低数据库连接频率
 ActiveRecord::Base.establish_connection(:adapter => "mysql2",
@@ -38,13 +38,14 @@ get '/' do
     #直接用where方法查询，查不到返回空数组，省心-。-
     @query_msg = Message.where("id = ?",params[:query])
   elsif params[:mode]=="username" 
-    #先查找是否存在此用户名，若没找到返回空数组，若存在，则通过id搜索相关留言
-    temp = User.find_by(username: params[:query].strip)
-    if temp==nil
-      @query_msg = []
-    else
-      @query_msg = Message.where("user_id = ?",temp.id)
-    end
+    # #先查找是否存在此用户名，若没找到返回空数组，若存在，则通过id搜索相关留言
+    # temp = User.find_by(username: params[:query].strip)
+    # if temp==nil
+    #   @query_msg = []
+    # else
+    #   @query_msg = Message.where("user_id = ?",temp.id)
+    # end
+    @query_msg = manager.query_by_user(params[:query])
   else
     return erb :index
   end
@@ -140,6 +141,7 @@ end
 
 get '/signup' do 
   session[:admin] = false     #注册时关闭session，以免 注册后跳转登录页面 会直接登录原账号
+  @new_user = User.new
   erb :signup
 end
 
@@ -152,6 +154,23 @@ post '/signup' do
     @message = {status: 'danger', desc: e.message }
     erb :signup
   end
+
+  #由于以前没有使用虚拟属性password，现在改为confirmation验证比较麻烦，所以采用混合验证。太阳。我错了我再也不改了
+  # begin
+  #   usermgr.validate(params[:new_password],params[:new_password2])
+  # rescue Exception => e 
+  #   @message = {status: 'danger', desc: e.message }
+  #   @new_user = User.new
+  #   erb :signup
+  # end
+  # @new_user = User.new
+  # @new_user.username = params[:new_username]
+  # @new_user.userpassword = Digest::SHA1.hexdigest(params[:new_password]) #使用SHA1加密后储存密码
+  # if @new_user.save
+  #   redirect to '/login'
+  # else
+  #   erb :signup
+  # end
 end
 
 get '/signin' do
@@ -196,7 +215,9 @@ end
 
 get '/:username' do
   redirect to '/signin' unless session[:admin]==true
-  @query_msg = manager.query_by_user(session[:username].strip)
+  # @query_msg = manager.query_by_user(session[:username].strip)
+  temp = User.find(session[:id])    #改进之前通过用户名find_by，直接通过主键-。-
+  @query_msg = temp.messages
   erb :info
 end
 

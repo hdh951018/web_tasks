@@ -3,6 +3,7 @@ require 'mysql2'
 
 
 class Message < ActiveRecord::Base
+  belongs_to :user
   validates :msg ,presence:{value: true,message: "请输入留言内容"},
     length:{minimum: 10, message: "内容不足十个字"}
 
@@ -36,11 +37,20 @@ class Message < ActiveRecord::Base
   end
 
   def query_by_user(username)
-    temp = User.find_by(username: username)
-    if temp ==nil
-      qus = []
-    else
-      qus = Message.where("user_id = ?",temp.id)
+    # temp = User.find_by(username: username)
+    # if temp ==nil
+    #   qus = []
+    # else
+    #   qus = Message.where("user_id = ?",temp.id)
+    # end
+    temp = User.where("username like ?", '%' + username + '%' )
+    p temp 
+    found = Array.new
+    temp.each do |t|
+      # result = Message.where("user_id = ?",t.id)
+      found = found + t.messages
     end
+    p found
+    found
   end  
 end

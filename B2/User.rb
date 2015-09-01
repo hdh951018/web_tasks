@@ -4,11 +4,18 @@ require 'digest/sha1'
 
 
 class User < ActiveRecord::Base
+  has_many :messages
+  
+  # validates :username,presence:{value: true, message: "请输入用户名"},
+  # uniqueness:{value:true, message: "该用户名已存在"},
+  # length:{minimum: 6, maximum: 16, message: "用户名长度为6-16个字符"}, #可以在html页面中输入框限制输入长度
+  # format:{with:/\A[a-z][0-9a-z]+\Z/, message: "用户名只用由字母和数字组成，且必须是字母开头"}   
+
 end
 
 class UsrManager
   def signup(username,userpassword,userpassword2)    #需要很多检验，包括非法字符，长度，空格等；以及是否有存在的username
-    validate(username,userpassword,userpassword2)
+    validate(username, userpassword,userpassword2)
     temp = User.new
     temp.username = username
     temp.userpassword = Digest::SHA1.hexdigest(userpassword) #使用SHA1加密后储存密码
@@ -58,7 +65,9 @@ class UsrManager
       raise '用户名只用由字母和数字组成，且必须是字母开头'
     elsif User.find_by(username: username)!=nil
       raise '用户名已经被使用'
-    elsif userpassword.length<6  #在网页中嵌入长度上限
+    elsif userpassword.length>16
+      raise '密码长度太长'        #在网页中嵌入长度上限
+    elsif userpassword.length<6  
       raise '密码长度太短'      
     elsif userpassword != userpassword2
       raise '两次密码输入不一致'
