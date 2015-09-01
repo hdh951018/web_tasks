@@ -30,21 +30,9 @@ get '/' do
   if params[:query]==''
     @query_msg = Message.order(:create_time)
   elsif params[:mode]=="id" 
-    # temp_array = Array.new
-    # if (temp=Message.find_by(id: params[:query].strip))!=nil 
-    #   temp_array.push(temp)
-    # end
-
     #直接用where方法查询，查不到返回空数组，省心-。-
     @query_msg = Message.where("id = ?",params[:query])
   elsif params[:mode]=="username" 
-    # #先查找是否存在此用户名，若没找到返回空数组，若存在，则通过id搜索相关留言
-    # temp = User.find_by(username: params[:query].strip)
-    # if temp==nil
-    #   @query_msg = []
-    # else
-    #   @query_msg = Message.where("user_id = ?",temp.id)
-    # end
     @query_msg = manager.query_by_user(params[:query])
   else
     return erb :index
@@ -60,13 +48,6 @@ end
 
 post '/add' do
   return redirect to ('/') if params[:addCncl] == '取消'
-  # begin
-  #   manager.add(params[:new_content], session[:id]) 
-  #   redirect to ('/')
-  # rescue Exception => e
-  #   @message = {status: 'danger', desc: e.message }
-  #   erb :add
-  # end
   @new_message = Message.new
   @new_message.msg = params[:new_content]
   @new_message.user_id = session[:id]
@@ -77,24 +58,10 @@ post '/add' do
   end
 end
 
-# get '/:username/delete/:id'  do
-#   redirect to '/signin' unless session[:admin]==true
-#   if manager.query_by_id(params[:id])==nil ||
-#     manager.query_by_id(params[:id]).user_id != session[:id] #确定是当前用户的留言，否则不予操作，下同
-#     return '404 <br>NOT FOUND'  
-#   end  
-#   manager.delete(params[:id])
-#   if params[:username] == 'index'             #在主页删除时返回主页，在个人信息删除时返回到个人信息，下同
-#     erb :deleted
-#   else
-#     redirect to ("/#{params[:username]}")     #直接删除，暂无反馈
-#   end
-# end
-
 get '/delete/:id'  do
   redirect to '/signin' unless session[:admin]==true
-  if manager.query_by_id(params[:id])==nil ||
-    manager.query_by_id(params[:id]).user_id != session[:id] #确定是当前用户的留言，否则不予操作，下同
+  if Message.find(params[:id])==nil ||
+    Message.find(params[:id]).user_id != session[:id] #确定是当前用户的留言，否则不予操作，下同
     return '404 <br>NOT FOUND'  
   end  
   manager.delete(params[:id])
@@ -107,13 +74,13 @@ end
 
 get '/:username/edit/:id'  do
   redirect to '/signin' unless session[:admin]==true
-  @edit_message = Message.find_by(id: params[:id])
+  @edit_message = Message.find(params[:id])
   #防止恶意访问限制url
-  if Message.find_by(id: params[:id])==nil ||
-    Message.find_by(id: params[:id]).user_id != session[:id]
+  if Message.find(params[:id])==nil ||
+    Message.find(params[:id]).user_id != session[:id]
     return '404 <br>NOT FOUND'  
   end
-  params[:editContent] = Message.find_by(id: params[:id]).msg
+  params[:editContent] = Message.find(params[:id]).msg
   erb :edit
 end
 
@@ -126,20 +93,7 @@ post '/:username/edit/:id' do
       redirect to ("/#{params[:username]}")
     end
   end
-  # begin
-  #   manager.edit(params[:id], params[:editContent]) 
-  #   if params[:username] == 'index'
-  #     redirect to '/'
-  #   else
-  #     redirect to ("/#{params[:username]}")
-  #   end
-  # rescue Exception => e
-  #   @editID = params[:id]
-  #   @message = {status: 'danger', desc: e.message }
-  #   @origin_msg = params[:editContent]
-  #   erb :edit
-  # end
-  @edit_message = Message.find_by(id: params[:id])
+  @edit_message = Message.find(params[:id])
   @edit_message.msg = params[:editContent].strip
   if @edit_message.save
     if params[:username] == 'index'
@@ -148,7 +102,6 @@ post '/:username/edit/:id' do
       redirect to ("/#{params[:username]}")
     end
   else
-    # @editID = params[:id]
     erb :edit
   end
 end
@@ -229,7 +182,6 @@ end
 
 get '/:username' do
   redirect to '/signin' unless session[:admin]==true
-  # @query_msg = manager.query_by_user(session[:username].strip)
   temp = User.find(session[:id])    #改进之前通过用户名find_by，直接通过主键-。-
   @query_msg = temp.messages
   erb :info
