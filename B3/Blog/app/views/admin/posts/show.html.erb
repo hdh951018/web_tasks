@@ -13,7 +13,7 @@
       <%= image_tag @post.cover_url(:normal), :class => "img-rounded" %>
     </p>    
     <div style="margin-bottom:20px;">
-      <%= raw(@post.content) %>
+      <%= sanitize(@post.content) %>
     </div>
   </div>
   <div>
@@ -21,8 +21,8 @@
     <%= link_to '编辑', edit_admin_post_path,'data-no-turbolink' => true,:class => 'btn'  %> |
     <%= link_to '返回', admin_posts_path,:class => 'btn' %>
   </div>
-  <div class="table">
-    <table>
+  <div >
+    <table class="table">
       <thead>
         <tr>
           <th>Email</th>
@@ -47,7 +47,7 @@
       </tbody>
     </table>
 
-    <table>
+    <table class="table">
       <thead>
         <tr>
           <th>Email</th>

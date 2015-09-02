@@ -18,7 +18,7 @@ class FeedbacksController < ApplicationController
 
     respond_to do |format|
       if @feedback.save
-        format.html { redirect_to "/index" , notice: '留言反馈成功' }
+        format.html { redirect_to "/" , notice: '留言反馈成功' }
         format.json { render :show, status: :created, location: @feedback }
       else
         format.html { render :new }

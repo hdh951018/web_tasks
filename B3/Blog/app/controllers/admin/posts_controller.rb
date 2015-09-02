@@ -82,7 +82,4 @@ class Admin::PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:title, :content, :cover, :admin_id, :category, :summary)
     end
-
-    #通过判断是否登录选择对应的布局
-
 end

@@ -4,7 +4,23 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
+    #全部文章
     @posts = Post.all
+    #通过类别
+    if params[:category_active]
+      @posts = Post.where(category: params[:category_active])
+    end
+    #通过月份
+    if params[:month_active]
+      @posts = Array.new
+      postss = Post.all
+      postss.each do |t|
+        #循环查询创建时间是否有包含指定月份的，效率较低but useful for now
+        @posts.push(t) if t.created_at.to_s.include?(params[:month_active])
+      end
+      @posts
+    end
+      
     unless session[:admin_id]
       render "index_visitor"
     end

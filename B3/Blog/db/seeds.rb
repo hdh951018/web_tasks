@@ -5,13 +5,14 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+category_list = ["默认","编程","文学","小说","情感","日记","笔记"]
 Post.delete_all
 20.times do |i|
   t = Post.new
   t.admin_id = i%3+1
   t.title = "拥抱#{i+1}"
   t.cover = ''
-  t.category = "默认"
+  t.category = category_list[rand(7)]
   t.content = "脱下长日的假面 奔向梦幻的疆界 <br>
     南瓜马车的午夜 换上童话的玻璃鞋 <br>
     让我享受这感觉 我是孤傲的蔷薇 <br>
@@ -38,6 +39,8 @@ Post.delete_all
     抱紧我 吻我 喔爱~~~ 别走 <br>
     抱紧我 吻我 喔爱~~~"
   t.summary = "脱下长日的假面 奔向梦幻的疆界..."
+  #模拟一下创建时间，还得按顺序，还得稍微随机一下，心累
+  t.created_at = Time.now - 2*12*30*24*3600 + i*30*24*3600 + rand(10*24*3600)
   t.save
 end
 

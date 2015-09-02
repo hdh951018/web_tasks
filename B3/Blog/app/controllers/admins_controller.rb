@@ -2,6 +2,7 @@ class AdminsController < ApplicationController
   before_action :set_admin, only: [:show, :edit, :update, :destroy,:edit_profile,:edit_password]
   # before_filter :authorize #限制访问，未登录则重定向到login
   protect_from_forgery
+  before_filter :authorize
   # GET /admins
   # GET /admins.json
   def index
@@ -32,7 +33,7 @@ class AdminsController < ApplicationController
   # POST /admins.json
   def create
     @admin = Admin.new(admin_params)
-    @admin.description = "这个人真的很懒，怎么都没留下..."
+    @admin.description = "这个人真的很懒，什么都没留下..."
     @admin.avatar = ''
     respond_to do |format|
       if @admin.save
@@ -86,6 +87,7 @@ class AdminsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def admin_params
-      params.require(:admin).permit(:username, :nickname, :hashed_password, :salt, :password, :password_confirmation)
+      params.require(:admin).permit(:username, :nickname, :hashed_password, 
+        :salt, :password, :password_confirmation, :description)
     end
 end

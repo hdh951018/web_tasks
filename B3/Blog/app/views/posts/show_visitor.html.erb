@@ -7,7 +7,7 @@
 
 <p>
   <strong>Content:</strong>
-  <%= raw(@post.content) %>
+  <%= sanitize(@post.content) %>
 </p>
 
 <p>

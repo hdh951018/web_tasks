@@ -16,7 +16,6 @@
       <tr>
         <td><%= feedback.email %></td>
         <td><%= feedback.content %></td>
-        <td><%= link_to '查看', "feedbacks/#{feedback.id}/show" %></td>
         <td><%= link_to '删除', "feedbacks/#{feedback.id}", method: :delete, data: { confirm: '你确定要删除此条反馈吗?' } %></td>
       </tr>
     <% end %>
