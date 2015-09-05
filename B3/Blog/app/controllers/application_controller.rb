@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   layout :admin_layout
 
+
   before_filter do 
     if params[:post_id]!='' && params[:post_id]
       session[:post_id]=params[:post_id]

@@ -2,7 +2,7 @@ class AdminsController < ApplicationController
   before_action :set_admin, only: [:show, :edit, :update, :destroy,:edit_profile,:edit_password]
   # before_filter :authorize #限制访问，未登录则重定向到login
   protect_from_forgery
-  before_filter :authorize
+  before_filter :authorize,only: [:show, :edit, :update, :destroy,:edit_profile,:edit_password]
   # GET /admins
   # GET /admins.json
   def index

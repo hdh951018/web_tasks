@@ -5,9 +5,19 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+
+# #生成一个排好序的随机数组，方法笨拙whatever
+randnum = Array.new
+30.times do 
+  randnum.push(rand(1...365))
+end
+randnum.sort!
+
+
 category_list = ["默认","编程","文学","小说","情感","日记","笔记"]
 Post.delete_all
-20.times do |i|
+30.times do |i|
   t = Post.new
   t.admin_id = i%3+1
   t.title = "拥抱#{i+1}"
@@ -40,7 +50,7 @@ Post.delete_all
     抱紧我 吻我 喔爱~~~"
   t.summary = "脱下长日的假面 奔向梦幻的疆界..."
   #模拟一下创建时间，还得按顺序，还得稍微随机一下，心累
-  t.created_at = Time.now - 2*12*30*24*3600 + i*30*24*3600 + rand(10*24*3600)
+  t.created_at = Time.now - 1*12*30*24*3600 + randnum[i]*24*3600
   t.save
 end
 
@@ -49,6 +59,7 @@ Comment.delete_all
   t = Comment.new
   t.post_id = j%30+1
   t.email = '1234567@qq.com'
+  # t.email = rand(1000000..999999999).to_s + "@qq.com"
   t.name = "评论的人"
   t.content = (rand(100)%2==1)? "不好听啊" : "这歌不错的"
   t.is_checked = (rand(100)%2==1)? true : false

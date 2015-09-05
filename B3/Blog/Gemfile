@@ -1,6 +1,8 @@
 source 'https://ruby.taobao.org' #更换为淘宝镜像
 
-gem 'dalli'
+
+gem 'kaminari'  #分页
+gem 'dalli' #cache
 gem 'carrierwave' #上传图片
 gem 'mini_magick' #裁剪图片
 gem 'bootstrap-sass'

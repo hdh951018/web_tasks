@@ -15,7 +15,7 @@ class Admin::CommentsController < ApplicationController
   def check_switch 
     if params[:check] 
       params[:check].each do |id|
-        comment = Comment.find_by(id: id)
+        comment = Comment.find(id)
         comment.is_checked = (comment.is_checked ? false : true)
         comment.save
       end
