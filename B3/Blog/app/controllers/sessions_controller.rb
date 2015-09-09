@@ -57,9 +57,9 @@ class SessionsController < ApplicationController
   end
 
   def create
-    p session[:login_count]
-    p session[:login_time]
-    p (Time.new - session[:login_time].to_datetime)
+    # p session[:login_count]
+    # p session[:login_time]
+    # p (Time.new - session[:login_time].to_datetime)
     # session[:admin_id]=nil
     # if admin = Admin.authenticate(params[:username],params[:password])
     #   session[:admin_id] = admin.id

@@ -1,25 +1,75 @@
-<%= form_for(@feedback) do |f| %>
-  <% if @feedback.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@feedback.errors.count, "error") %> prohibited this feedback from being saved:</h2>
+<body>
+<!---header---->      
+<div class="header">  
+   <div class="container">
+      <div class="logo">
+        <a href="/posts"><img src="../images/logo.jpg" title="" /></a>
+      </div>
+       <!---start-top-nav---->
+       <div class="top-menu">
+         <div class="search">
+           <form>
+           <input type="text" placeholder="" required="">
+           <input type="submit" value=""/>
+           </form>
+         </div>
+          <span class="menu"> </span> 
+           <ul>
+            <li><a href="/posts">首页</a></li>           
+            <li class="active"><a href="/feedbacks/new">意见反馈</a></li>        
+            <li><a href="/login">登录</a></li>     
+            <div class="clearfix"> </div>
+           </ul>
+       </div>
+       <div class="clearfix"></div>
+        <!---//End-top-nav---->         
+   </div>
+</div>
+<!--/header-->
+<div class="contact-content">
+   <div class="container">
+       <div class="contact-info">
+         <h2>意见反馈</h2>
+       </div>
+       <div class="contact-details">         
+        <%= form_for(@feedback) do |f| %>
+          <% if @feedback.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@feedback.errors.count, "error") %> prohibited this feedback from being saved:</h2>
 
-      <ul>
-      <% @feedback.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+              <ul>
+              <% @feedback.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
 
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :content %><br>
-    <%= f.text_area :content %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+          <div class="field">
+            <%= f.label :email %><br>
+            <%= f.text_field :email %>
+          </div>
+          <div class="field">
+            <%= f.label :content %><br>
+            <%= f.text_area :content %>
+          </div>
+          <div class="actions">
+            <%= submit_tag "提交"  %>
+          </div>
+        <% end %>
+      </div>
+        <div class="clearfix"></div>
+       </div>    
+
+
+   </div>
+</div>
+<!---->
+<div class="footer">
+   <div class="container">
+   <p>版权所有 © 2016 [博客名称] | 模板版权： <a href="http://w3layouts.com/">W3layouts</a></p>
+   </div>
+</div>
+
+  
+</body>

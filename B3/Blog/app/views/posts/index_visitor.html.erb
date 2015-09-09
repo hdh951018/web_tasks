@@ -1,70 +1,94 @@
-<div class="span3" id="sidebar">
-  <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
-    <li>
-      <a href="/posts" class="btn"><i class="icon-chevron-right"></i>全部文章</a>
-    </li>
-    ------------------------
-    <% category_list.each do |i|%>
-      <li >
-        <form method="get">
-          <input type="submit" name="category_active" value="<%= i %>"  >
-        </form>
-      </li>
-    <% end %>
-    ------------------------
-    <% month_list.each do |i|%>
-      <li >
-        <form method="get">
-          <input type="submit" name="month_active" value="<%= i %>"  >
-        </form>
-      </li>
-    <% end %>
-  </ul>
+<head>
+<title>Blog</title>
+
+ <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <link rel="stylesheet" media="all" href="/assets/style" data-turbolinks-track="true">
+ <link rel="stylesheet" media="all" href="/assets/bootstrap1.self-45b08a13e7b62a870971212159f74b797b6b2109719a65ad9703515a8d888f85.css?body=1" data-turbolinks-track="true">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<!---header-->      
+<div class="header">  
+   <div class="container">
+      <div class="logo">
+        <!-- 记得把这里的logo.jpg改一下，里面的BLOGNAME改成你自己的 -->
+        <a href="posts"><img src="images/logo.jpg" title="" /></a>
+      </div>
+       <!---start-top-nav-->
+       <div class="top-menu">
+         <div class="search">
+           <form>
+           <input type="text" placeholder="" required="">
+           <input type="submit" value=""/>
+           </form>
+         </div>
+          <span class="menu"> </span> 
+           <ul>
+            <li class="active"><a href="posts">首页</a></li>           
+            <li><a href="/feedbacks/new">意见反馈</a></li>   
+            <li><a href="/login">登录</a></li>         
+            <div class="clearfix"> </div>
+         </ul>
+       </div>
+       <div class="clearfix"></div>
+   </div>
 </div>
-<div class="span9" id="content" style="margin:10px">
-
-    <div class="row-fluid">
-        <!-- block -->
-        <div class="block">
-            
-          <p id="notice"><%= notice %></p>
-
-          <h2>文章列表</h2>
-          <div>
-          <% if session[:admin_id]==nil %>
-          <a href="login"><button>登录</button></a>
-          <% end %>
-          <a href="/feedbacks/new"><button>反馈</button></a>
+<!--/header-->
+<div class="content">
+    <div class="container">
+      <!-- <div class="contact-info" style="margin-top:30px;background-color:#FFFFFF;" >
+        <h2>文章列表</h2>
+      </div> -->
+      <div class="content-grids">
+        <div class="col-md-8 content-main">
+          <div class="content-grid">
+            <% @posts.reverse.each do |post| %>
+              <div class="content-grid-info">
+                <%= image_tag post.cover_url(:normal) %>
+                <div class="post-info">
+                  <h4>
+                    <%= link_to "#{post.title}", "posts/#{post.id}" %> 
+                    <%= post.admin.nickname %>
+                    <%= post.created_at.strftime('%Y-%m-%d %H:%M:%S') %>/ 
+                    <%= post.comments.count %>条留言
+                  </h4>
+                  <p><%= post.summary %> </p>
+                  <a href="posts/<%= post.id %>"><span></span>查看全文</a>
+                </div>
+              </div>
+            <% end %>
           </div>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>文章封面</th>
-                <th>文章标题</th>
-                <th>简介</th>
-                <th>分类</th>
-                <th>作者</th>
-                <th>创建时间</th>
-                <th colspan="6"></th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <% @posts.reverse.each do |post| %>
-                <tr>
-                  <td><%= image_tag post.cover_url(:normal) %></td>
-                  <td><%= post.title %></td>
-                  <td><%= post.summary %></td>
-                  <td><%= post.category %></td>
-                  <td><%= post.admin.nickname %></td>
-                  <td><%= post.created_at %></td>
-                  <td><%= link_to '查看全文', post %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-          <br>
         </div>
-        <!-- /block -->
+      
+        <div class="col-md-4 content-right">
+         <div class="archives">
+           <h3>存档</h3>
+           <ul>
+            <% month_list.each do |i|%>
+              <li >
+                <form method="get">
+                  <input type="submit" name="month_active" value="<%= i %>" class="btn btn-sm" >
+                </form>
+              </li>
+            <% end %>
+           </ul>
+         </div>
+         <div class="categories">
+           <h3>分类</h3>
+           <ul>
+            <% category_list.each do |i|%>
+              <li >
+                <form method="get">
+                  <input type="submit" name="category_active" value="<%= i %>" class="btn btn-sm" >
+                </form>
+              </li>
+            <% end %>
+           </ul>
+         </div>
+         <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
     </div>
 </div>

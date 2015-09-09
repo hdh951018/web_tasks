@@ -22,7 +22,7 @@ class PostsController < ApplicationController
     end
       
     unless session[:admin_id]
-      render "index_visitor"
+      render "index_visitor",layout: false
     end
   end
 
