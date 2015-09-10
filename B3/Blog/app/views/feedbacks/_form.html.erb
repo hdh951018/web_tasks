@@ -1,3 +1,10 @@
+<head>
+<title>Blog</title>
+  <%= stylesheet_link_tag   'Posts/bootstrap_new', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag   'Posts/style', media: 'all', 'data-turbolinks-track' => true %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
 <body>
 <!---header---->      
 <div class="header">  
@@ -50,7 +57,7 @@
             <%= f.text_field :email %>
           </div>
           <div class="field">
-            <%= f.label :content %><br>
+            <%= f.label :反馈内容 %><br>
             <%= f.text_area :content %>
           </div>
           <div class="actions">

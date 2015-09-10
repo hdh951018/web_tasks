@@ -20,7 +20,7 @@ Post.delete_all
 30.times do |i|
   t = Post.new
   t.admin_id = i%3+1
-  t.title = "拥抱#{i+1}"
+  t.title = "拥抱——五月天#{i+1}"
   t.cover = ''
   t.category = category_list[rand(7)]
   t.content = "脱下长日的假面 奔向梦幻的疆界 <br>

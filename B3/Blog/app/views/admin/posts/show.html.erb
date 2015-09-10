@@ -10,6 +10,7 @@
       <%= @post.category %>
       <strong>作者：</strong>
       <%= session[:nickname] %>
+      <br>
       <%= image_tag @post.cover_url(:normal), :class => "img-rounded" %>
     </p>    
     <div style="margin-bottom:20px;">
@@ -20,6 +21,10 @@
     <%= link_to '删除', ".", method: :delete, data: { confirm: '确定要删除这篇文章吗?' },:class => 'btn' %>
     <%= link_to '编辑', edit_admin_post_path,'data-no-turbolink' => true,:class => 'btn'  %> |
     <%= link_to '返回', admin_posts_path,:class => 'btn' %>
+  </div>
+  <hr>
+  <div>
+    <h3 align="center">留言评论</h3>
   </div>
   <div >
     <table class="table">

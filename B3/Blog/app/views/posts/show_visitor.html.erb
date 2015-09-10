@@ -1,35 +1,123 @@
-<p id="notice"><%= notice %></p>
+<!DOCTYPE HTML>
+<html>
+<head>
+  <%= stylesheet_link_tag   'Posts/bootstrap_new', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag   'Posts/style', media: 'all', 'data-turbolinks-track' => true %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<!---header---->      
+<div class="header">  
+   <div class="container">
+      <div class="logo">
+        <a href="/posts"><img src="../images/logo.jpg" title="" /></a>
+      </div>
+       <!---start-top-nav---->
+       <div class="top-menu">
+         <div class="search">
+           <form>
+           <input type="text" placeholder="" required="">
+           <input type="submit" value=""/>
+           </form>
+         </div>
+          <span class="menu"> </span> 
+           <ul>
+            <li class="active"><a href="/posts">首页</a></li>           
+            <li><a href="contact.html">意见反馈</a></li>            
+            <div class="clearfix"> </div>
+           </ul>
+       </div>
+       <div class="clearfix"></div>
+          <script>
+          $("span.menu").click(function(){
+          $(".top-menu ul").slideToggle("slow" , function(){
+          });
+          });
+          </script>
+        <!---//End-top-nav---->         
+   </div>
+</div>
+<!--/header-->
+<div class="single">
+   <div class="container">
+      <div class="col-md-8 single-main">         
+        <div class="single-grid">
+          <!-- <img src="../images/post1.jpg" alt=""/> -->
+          <%= image_tag @post.cover_url(:normal) %>
+          <h3 align="center"><%= @post.title %></h3>                       
+          <div >
+            <%= sanitize(@post.content) %>
+          </div>
+        </div>
+       <ul class="comment-list">
+             <h5 class="post-author_head">作者：<a href="#" title="Posts by admin" rel="author">
+             <%= @post.admin.nickname %></a> 发表时间：<%= @post.created_at.strftime('%Y-%m-%d %H:%M:%S') %></h5>
 
-<p>
-  <strong>Title:</strong>
-  <%= @post.title %>
-</p>
+             <% @comments.each do |comment| %>
+              <% if comment.post_id == @post.id && comment.is_checked  %>
+                <li>
+                  <img src="../images/avatar.png" class="img-responsive" alt="">
+                  <div class="desc">
+                    <h4><%= comment.name %></h4>
+                    <p><%= comment.content %></p>
+                  </div>
+                  <div class="clearfix"></div>
+                </li>
+              <% end %>
+             <% end %>
+          </ul>
+       <!--  <div class="content-form">
+           <h3>留言</h3>
+          <form>
+            <input type="text" placeholder="姓名" required/>
+            <input type="text" placeholder="Email" required/>
+            <textarea></textarea>
+            <input type="submit" value="提交"/>
+           </form>
+        </div> -->
+        <%= link_to '添加评论', new_post_comment_path(@post.id) %>
+      </div>
 
-<p>
-  <strong>Content:</strong>
-  <%= sanitize(@post.content) %>
-</p>
+        <div class="col-md-4 content-right">
+         <div class="archives">
+           <h3>存档</h3>
+           <ul>
+            <% month_list.each do |i|%>
+              <li >
+                <form method="get" action="/posts">
+                  <input type="submit" name="month_active" value="<%= i %>" class="btn btn-sm" 
+                  style="margin:2px;" >
+                </form>
+              </li>
+            <% end %>
+           </ul>
+         </div>
+         <div class="categories" >
+           <h3>分类</h3>
+           <ul>
+            <% category_list.each do |i|%>
+              <li >
+                <form method="get" action="/posts">
+                  <input type="submit" name="category_active" value="<%= i %>" class="btn btn-sm" 
+                  style="margin:2px;" >
+                </form>
+              </li>
+            <% end %>
+           </ul>
+         </div>
+         <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+</div>
+<!---->
+<div class="footer">
+   <div class="container">
+   <p>版权所有 © 2016 [博客名称] | 模板版权： <a href="http://w3layouts.com/">W3layouts</a></p>
+   </div>
+</div>
 
-<p>
-  <strong>Cover:</strong>
-  <%= image_tag @post.cover_url(:normal) %>
-</p>
+  
 
-<p>
-  <strong>Admin:</strong>
-  <%= @post.admin_id %>
-</p>
-
-<p>
-  <strong>Category:</strong>
-  <%= @post.category %>
-</p>
-
-<p>
-  <strong>Summary:</strong>
-  <%= @post.summary %>
-</p>
-
-<%= link_to 'Back', posts_path %>
-
-<%= link_to '添加评论', new_post_comment_path(@post.id) %>

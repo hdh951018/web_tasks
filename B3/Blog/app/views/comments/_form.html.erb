@@ -29,6 +29,8 @@
 
     <div class="actions">
       <%= submit_tag "发表" ,:class => "btn" %>
+      <input type="button" value="取消" class="btn" 
+      onclick="javascript:location='/posts/<%= session[:post_id] %>';">
     </div>
   <% end %>
 </div>

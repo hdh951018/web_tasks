@@ -1,9 +1,7 @@
 <head>
 <title>Blog</title>
-
- <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <link rel="stylesheet" media="all" href="/assets/style" data-turbolinks-track="true">
- <link rel="stylesheet" media="all" href="/assets/bootstrap1.self-45b08a13e7b62a870971212159f74b797b6b2109719a65ad9703515a8d888f85.css?body=1" data-turbolinks-track="true">
+  <%= stylesheet_link_tag   'Posts/bootstrap_new', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag   'Posts/style', media: 'all', 'data-turbolinks-track' => true %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
@@ -61,14 +59,15 @@
           </div>
         </div>
       
-        <div class="col-md-4 content-right">
+        <div class="col-md-4 content-right " >
          <div class="archives">
            <h3>存档</h3>
            <ul>
             <% month_list.each do |i|%>
               <li >
                 <form method="get">
-                  <input type="submit" name="month_active" value="<%= i %>" class="btn btn-sm" >
+                  <input type="submit" name="month_active" value="<%= i %>" class="btn btn-sm" 
+                  style="margin:-5px;" >
                 </form>
               </li>
             <% end %>
@@ -80,7 +79,8 @@
             <% category_list.each do |i|%>
               <li >
                 <form method="get">
-                  <input type="submit" name="category_active" value="<%= i %>" class="btn btn-sm" >
+                  <input type="submit" name="category_active" value="<%= i %>" class="btn btn-sm"
+                  style="margin:-5px;" >
                 </form>
               </li>
             <% end %>

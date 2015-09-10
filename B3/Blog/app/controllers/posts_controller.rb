@@ -31,7 +31,7 @@ class PostsController < ApplicationController
   def show
     @comments = Comment.all
     unless session[:admin_id]
-      render "show_visitor"
+      render "show_visitor",layout: false
     end
   end
 
@@ -97,6 +97,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:title, :content, :cover, :admin_id, :category, :summary)
+      params.require(:post).permit(:title, :content, :cover, :admin_id, :category, :summary, :cover_cache)
     end
 end
