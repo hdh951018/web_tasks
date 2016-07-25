@@ -12,6 +12,7 @@
   var currentIndex = 0  // 当前index
   var imageCount = 0  //  图片数量
   var isPaused = false
+  var playerId
 
   var outAnimation = "fadeOut"
   var inAnimation = "fadeIn"
@@ -53,7 +54,7 @@
       })
       // 显示第一张图
       self.children()[0].style.display = "block";
-      this.lunbo("player")
+      playerId = setInterval(function(){self.lunbo("next")}, settings.interval)
       return this
     },
     current: function(){
@@ -73,11 +74,12 @@
       return this
     },
     stop: function(){
-      isPaused = true
+      clearInterval(playerId)
       return this
     },
     resume: function(){
-      isPaused = false
+      var self = this
+      playerId = setInterval(function(){self.lunbo("next")}, settings.interval)
       return this
     },
     jump: function(index){
@@ -92,14 +94,6 @@
         $(this.children()[currentIndex]).velocity(inAnimation, animationTime)
       }
       return this
-    },
-    player: function(){
-      var self = this
-      if(!isPaused){
-        self.lunbo("next")
-        setTimeout(function(){self.lunbo("player")}, settings.interval)
-      }
-      return self
     }
   }
 
