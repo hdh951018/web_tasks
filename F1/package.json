@@ -1,0 +1,18 @@
+{
+  "name": "lunbo",
+  "version": "1.0.0",
+  "description": "slideshow plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "slideshow"
+  ],
+  "author": "Jason <529511542@qq.com> (http://www.jasonsi.com/)",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "velocity-animate": "^1.2.3"
+  }
+}
