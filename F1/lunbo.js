@@ -95,9 +95,7 @@
     },
     player: function(){
       var self = this
-      if(isPaused){
-        return self
-      } else {
+      if(!isPaused){
         self.lunbo("next")
         setTimeout(function(){self.lunbo("player")}, settings.interval)
       }
