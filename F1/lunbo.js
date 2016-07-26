@@ -54,6 +54,7 @@
       })
       // 显示第一张图
       self.children()[0].style.display = "block";
+      if(playerId) clearInterval(playerId)
       playerId = setInterval(function(){self.lunbo("next")}, settings.interval)
       return this
     },
