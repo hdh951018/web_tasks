@@ -3,21 +3,21 @@
     interval: 3000,
     title: "**** **** **** ****",
     comment: "04/28",
-    onSwitchStart: null,
-    onSwitchEnd: null
+    onSwitchStart: function(){},
+    onSwitchEnd: function(){}
   }
 
   var settings = {}
-  var initStatus = false // 标识是否初始化过
-  var currentIndex = 0  // 当前index
+  var initStatus = false
+  var currentIndex = 0
   var lastIndex = 0
-  var imageCount = 0  //  图片数量
+  var imageCount = 0
   var isPaused = false
-  var playerId
+  var playerId // ID of setInterval
 
   var outAnimation = "fadeOut"
   var inAnimation = "fadeIn"
-  var animationTime = 2000  // 动画时间
+  var animationTime = 2000  // Duration of the animation
 
 
   var beginOption = {
@@ -44,18 +44,17 @@
 
   var methods = {
     init: function(options){
-      initStatus = true  // 初始化
+      initStatus = true  // initialize
       if($.type(options.interval) == "number"){
-        // 如果是数字则赋值
+        // Assign if `interval` is a number
         settings.interval = options.interval + animationTime
       } else if ($.type(options.interval) == "undefined") {
-        // 如果未传入参数则使用默认时间间隔
+        // Use default interval if `interval` is undefined
         settings.interval = defaults.interval + animationTime
       } else {
-        // 如果传入别的类型的参数，则报错
         $.error("TypeError: The value of interval can only be a number")
       }
-      // 保存回调函数
+      // Save callback function
       settings.onSwitchStart = options.onSwitchStart || defaults.onSwitchStart
       settings.onSwitchEnd = options.onSwitchEnd || defaults.onSwitchEnd
       imageCount = options.data.length
@@ -67,12 +66,12 @@
           alt: index
         })
         img.css({
-          'position': 'absolute',
-          'left': 0,
-          'right': 0,
-          'margin': '0 auto',
-          'box-shadow': '3px 3px 7px rgba(69, 69, 69, 0.6)',
-          'display': 'none'
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          margin: '0 auto',
+          boxShadow: '3px 3px 7px rgba(69, 69, 69, 0.6)',
+          display: 'none'
         })
         self.append(img)
       })
