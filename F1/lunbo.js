@@ -12,13 +12,16 @@
   var currentIndex = 0
   var lastIndex = 0
   var imageCount = 0
+  var imageHeight = 210
   var isPaused = false
   var playerId // ID of setInterval
 
   var outAnimation = "fadeOut"
   var inAnimation = "fadeIn"
-  var animationTime = 2000  // Duration of the animation
+  var animationTime = 1500  // Duration of the animation
 
+  var activeColor = 'rgba(201, 201, 201, 0.6)'
+  var inactiveColor = 'rgba(128, 128, 128, 0.6)'
 
   var beginOption = {
     duration: animationTime,
@@ -35,11 +38,13 @@
   }
 
   var imageOut = function(self){
-    $(self.children()[currentIndex]).velocity(outAnimation, beginOption)
+    $(self.find("img")[currentIndex]).velocity(outAnimation, beginOption)
+    $(self.find("ul>li")[currentIndex]).css({backgroundColor: activeColor})
   }
 
   var imageIn = function(self){
-    $(self.children()[currentIndex]).velocity(inAnimation, completeOption)
+    $(self.find("img")[currentIndex]).velocity(inAnimation, completeOption)
+    $(self.find("ul>li")[currentIndex]).css({backgroundColor: inactiveColor})
   }
 
   var methods = {
@@ -75,8 +80,39 @@
         })
         self.append(img)
       })
-      // 显示第一张图
-      self.children()[0].style.display = "block";
+      var circleList = $("<ul>").css({
+        position: 'relative',
+        textAlign: 'center',
+        left: 0,
+        right: 0,
+        padding: 0,
+        margin: '0 auto',
+        top: imageHeight - 20 + 'px', // HACK Should depend on the height of thehighest image
+        listStyle: 'none'
+      })
+      self.append(circleList)
+
+      for(let i = 0; i < imageCount; i++){
+        var circle = $("<li>").html(i+1).css({
+          cursor: 'pointer',
+          textAlign: 'center',
+          fontSize: '12px',
+          color: 'rgba(46, 46, 46, 0.8)',
+          width: '14px',
+          height: '14px',
+          borderRadius: '10px',
+          backgroundColor: activeColor,
+          display: 'inline-block',
+          margin: '2px'
+        }).click(function(){
+          self.lunbo(i)
+        })
+        circleList.append(circle)
+      }
+      // Display the first image and dot
+      $(self.find("img")[0]).css({display: 'block'})
+      $(self.find("ul>li")[0]).css({backgroundColor: inactiveColor})
+      // Avoid being initialized once again
       if(playerId) clearInterval(playerId)
       playerId = setInterval(function(){self.lunbo("next")}, settings.interval)
       return this
@@ -109,8 +145,10 @@
     },
     jump: function(index){
       if(index > imageCount || index < 0){
+        // Out of size
         $.error("Cannot find image by index = \'" + index + "\'")
       } else if(currentIndex == index) {
+        // Jump to current image without animation
         lastIndex = currentIndex
       } else {
         imageOut(this)
@@ -119,6 +157,7 @@
         imageIn(this)
       }
       var self = this
+      // Set an interval from beginning
       clearInterval(playerId)
       playerId = setInterval(function(){self.lunbo("next")}, settings.interval)
       return this
@@ -130,6 +169,7 @@
     if($.type(arg) == "object"){
       method = methods.init
     } else if(initStatus == false){
+      // If arg is not an object and this is not initialized, there will be a fault
       $.error("Method " + arg + " cannot be called before initializing jQuery.lunbo")
     } else if($.type(arg) == "number") {
       method = methods.jump
