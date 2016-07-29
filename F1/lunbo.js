@@ -8,25 +8,49 @@
   }
 
   var settings = {}
-  var initState = false // 标识是否初始化过
+  var initStatus = false // 标识是否初始化过
   var currentIndex = 0  // 当前index
+  var lastIndex = 0
   var imageCount = 0  //  图片数量
   var isPaused = false
   var playerId
 
   var outAnimation = "fadeOut"
   var inAnimation = "fadeIn"
-  var animationTime = "slow"  // 动画时间
+  var animationTime = 2000  // 动画时间
+
+
+  var beginOption = {
+    duration: animationTime,
+    begin: function(){
+      settings.onSwitchStart("something about event", currentIndex)
+    }
+  }
+
+  var completeOption = {
+    duration: animationTime,
+    complete: function(){
+      settings.onSwitchEnd("something about event", lastIndex)
+    }
+  }
+
+  var imageOut = function(self){
+    $(self.children()[currentIndex]).velocity(outAnimation, beginOption)
+  }
+
+  var imageIn = function(self){
+    $(self.children()[currentIndex]).velocity(inAnimation, completeOption)
+  }
 
   var methods = {
     init: function(options){
-      initState = true  // 初始化
+      initStatus = true  // 初始化
       if($.type(options.interval) == "number"){
         // 如果是数字则赋值
-        settings.interval = options.interval
+        settings.interval = options.interval + animationTime
       } else if ($.type(options.interval) == "undefined") {
         // 如果未传入参数则使用默认时间间隔
-        settings.interval = defaults.interval
+        settings.interval = defaults.interval + animationTime
       } else {
         // 如果传入别的类型的参数，则报错
         $.error("TypeError: The value of interval can only be a number")
@@ -35,12 +59,12 @@
       settings.onSwitchStart = options.onSwitchStart || defaults.onSwitchStart
       settings.onSwitchEnd = options.onSwitchEnd || defaults.onSwitchEnd
       imageCount = options.data.length
-
+      lastIndex = imageCount - 1
       var self = this
       $(options.data).each(function(index,element){
         var img = $("<img>").attr({
-          'src': this.image,
-          'alt': index
+          src: this.image,
+          alt: index
         })
         img.css({
           'position': 'absolute',
@@ -62,16 +86,17 @@
       return currentIndex
     },
     next: function(){
-      $(this.children()[currentIndex]).velocity(outAnimation, animationTime)
-      $(this.children()[(currentIndex + 1) % imageCount]).velocity(inAnimation, animationTime)
+      imageOut(this)
+      lastIndex = currentIndex
       currentIndex = (currentIndex + 1) % imageCount
-      console.log(currentIndex)
+      imageIn(this)
       return this
     },
     prev: function(){
-      $(this.children()[currentIndex]).velocity(outAnimation, animationTime)
-      $(this.children()[(currentIndex + imageCount -1) % imageCount]).velocity(inAnimation, animationTime, "transition.slideUpIn")
+      imageOut(this)
+      lastIndex = currentIndex
       currentIndex = (currentIndex - 1 + imageCount) % imageCount
+      imageIn(this)
       return this
     },
     stop: function(){
@@ -84,16 +109,19 @@
       return this
     },
     jump: function(index){
-      // 即使原地跳转也要过一遍动画
       if(index > imageCount || index < 0){
         $.error("Cannot find image by index = \'" + index + "\'")
       } else if(currentIndex == index) {
-        $(this.children()[currentIndex]).velocity(outAnimation, animationTime).velocity(inAnimation, animationTime)
+        lastIndex = currentIndex
       } else {
-        $(this.children()[currentIndex]).velocity(outAnimation, animationTime)
+        imageOut(this)
+        lastIndex = currentIndex
         currentIndex = index
-        $(this.children()[currentIndex]).velocity(inAnimation, animationTime)
+        imageIn(this)
       }
+      var self = this
+      clearInterval(playerId)
+      playerId = setInterval(function(){self.lunbo("next")}, settings.interval)
       return this
     }
   }
@@ -102,7 +130,7 @@
     var arg = arguments[0]
     if($.type(arg) == "object"){
       method = methods.init
-    } else if(initState == false){
+    } else if(initStatus == false){
       $.error("Method " + arg + " cannot be called before initializing jQuery.lunbo")
     } else if($.type(arg) == "number") {
       method = methods.jump

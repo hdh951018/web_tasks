@@ -28,9 +28,9 @@ $("#lunbo").lunbo({
   ],
   interval: 3000,
   onSwitchStart: function(event, index){
-
+    console.log("before:" + index)
   },
   onSwitchEnd: function(event, index){
-
+    console.log("after:" + index)
   }
 })
